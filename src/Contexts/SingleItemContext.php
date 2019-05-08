@@ -6,12 +6,14 @@ use IO\Helper\ContextInterface;
 use IO\Services\CustomerService;
 use IO\Services\ItemService;
 use Plenty\Plugin\ConfigRepository;
+use Plenty\Modules\Item\Item\Contracts\ItemRepositoryContract;														  
 
 
 class SingleItemContext extends GlobalContext implements ContextInterface
 {
     public $item;
 
+	public $themeItem;				  
     public $variations;
     public $attributeNameMap;
     public $variationUnits;
@@ -46,5 +48,6 @@ class SingleItemContext extends GlobalContext implements ContextInterface
 
         $this->bodyClasses[] = "item-" . $itemData['item']['id'];
         $this->bodyClasses[] = "variation-" . $itemData['variation']['id'];
+		$this->themeItem= $itemRep->show($itemData['item']['id']);
     }
 }
