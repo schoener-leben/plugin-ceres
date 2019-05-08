@@ -1,10 +1,10 @@
 {
-  "name": "Ceres",
+  "name": "Ceres SL",
   "license": "AGPL-3.0",
   "version": "4.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/plentymarkets/plugin-ceres.git"
+    "url": "https://github.com/schoener-leben/plugin-ceres.git"
   },
   "scripts": {
     "build": "gulp && npm run collectWidgets && node bundleSass.js",
