@@ -48,6 +48,7 @@ class SingleItemContext extends GlobalContext implements ContextInterface
 
         $this->bodyClasses[] = "item-" . $itemData['item']['id'];
         $this->bodyClasses[] = "variation-" . $itemData['variation']['id'];
+		$itemRep =  pluginApp(ItemRepositoryContract::class);
 		$this->themeItem= $itemRep->show($itemData['item']['id']);
     }
 }
