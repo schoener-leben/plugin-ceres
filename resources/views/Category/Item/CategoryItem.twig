@@ -43,20 +43,15 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="list-wrapper">
+						<div class="filter" id= "filtertop"> </div>
                             {% include "Ceres::Category.Item.Partials.ItemSorting" with { 'sortingData': searchOptions.sorting, 'selectedSorting': itemSorting } %}
 
                             {% include "Ceres::Category.Item.Partials.ItemsPerPage" with { 'itemsPerPage': searchOptions.itemsPerPage, 'selectedValue': itemsPerPage } %}
 
                             {% if overrideSearchFilters | trim is empty %}
-                                <item-filter-list :facet-data="{{ facets | json_encode }}">
-                                    {% if facets | length > 0 %}
-                                        <a class="btn btn-link filter-toggle" href="#filterCollapse">
-                                            <i class="fa fa-sliders default-float" aria-hidden="true"></i> {{ trans("Ceres::Template.itemFilter") }}
-                                        </a>
-                                    {% endif %}
-                                </item-filter-list>
+                                
                             {% else %}
-                                <div class="filter" id= "filtertop"> </div>
+                                
                             {% endif %}
                         </div>
                     </div>
@@ -84,7 +79,13 @@
                         {{ include('Ceres::PageDesign.Partials.Header.SideNavigation.twig') }}
                     </div>
 						<div class="filter" id= "filterside">
-                {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
+                <item-filter-list :facet-data="{{ facets | json_encode }}">
+                                    {% if facets | length > 0 %}
+                                        <a class="btn btn-link filter-toggle" href="#filterCollapse">
+                                            <i class="fa fa-sliders default-float" aria-hidden="true"></i> {{ trans("Ceres::Template.itemFilter") }}
+                                        </a>
+                                    {% endif %}
+                                </item-filter-list>
                 </div>								 
 
                     {{ LayoutContainer.show("Ceres::CategoryItem.SideNavBarBottom") }}
