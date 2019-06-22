@@ -79,13 +79,18 @@
 
             {% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}
                 <div class="col-3 hidden-md-down">
+				<div class="short-description">
+				{{ category.details[0].shortDescription | raw }}
+				</div>
                     <div class="sidebar-categories">
                         <div class="category-title">{{ trans("Ceres::Template.itemCategories") }}</div>
                         {{ include('Ceres::PageDesign.Partials.Header.SideNavigation.twig') }}
                     </div>
 						<div class="filter" id= "filterside">
+
                 {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
                 </div>								 
+
 
                     {{ LayoutContainer.show("Ceres::CategoryItem.SideNavBarBottom") }}
                 </div>
