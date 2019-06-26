@@ -24,7 +24,7 @@
             </div>
         {% endif %}
 
-        {% if category is defined and not ceresConfig.item.showCategoryImage %}
+        {% if category is defined and not ceresConfig.item.showCategoryImage and currentPage == 1 %}
             <div class="row mt-3">
                 <div class="col-12">
                     <h1 class="h2 category-title">{{ category.details[0].name }}</h1>
@@ -129,7 +129,7 @@
             </div>
         {% endif %}
 
-        {% if category is defined %}
+        {% if category is defined and currentPage == 1 %}
             <div class="col-12">
                 {% if ceresConfig.item.showCategoryDescriptionBottom in ["description1", "both"] and category.details[0].description | trim is not empty %}
                     <div class="category-description mb-3">{{ category.details[0].description | raw }}</div>
