@@ -22,6 +22,11 @@
         </div>
     {% else %}
         {% include category_template( category.id, lang, webstoreConfig.webstoreId ) ignore missing %}
+		<div id="page-body" class="main">
+			<div class="home container-max">
+				{{ category.details[0].description | raw }}
+			</div>
+		</div>
     {% endif %}
 
 {% endblock %}
