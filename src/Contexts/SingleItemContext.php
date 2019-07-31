@@ -3,8 +3,9 @@
 namespace Ceres\Contexts;
 
 use IO\Helper\ContextInterface;
+use IO\Services\CategoryService;
 use IO\Services\CustomerService;
-use IO\Services\ItemService;
+use Plenty\Plugin\Application;
 use Plenty\Plugin\ConfigRepository;
 use Plenty\Modules\Item\Item\Contracts\ItemRepositoryContract;														  
 
@@ -12,12 +13,11 @@ use Plenty\Modules\Item\Item\Contracts\ItemRepositoryContract;
 class SingleItemContext extends GlobalContext implements ContextInterface
 {
     public $item;
-
 	public $themeItem;				  
+    public $attributes;
     public $variations;
-    public $attributeNameMap;
-    public $variationUnits;
     public $customerShowNetPrices;
+    public $defaultCategory;
 
     public function init($params)
     {
@@ -35,17 +35,29 @@ class SingleItemContext extends GlobalContext implements ContextInterface
         $mappedAvailability = $configRepository->get('Ceres.availability.mapping.availability' . $availabiltyId);
         $this->item['documents'][0]['data']['variation']['availability']['mappedAvailability'] = $mappedAvailability;
 
-        /** @var ItemService $itemService */
-        $itemService = pluginApp(ItemService::class);
-
-        $this->variations = $itemService->getVariationAttributeMap($itemData['item']['id']);
-
-        $list = $itemService->getAttributeNameMap($itemData['item']['id']);
-        $this->attributeNameMap = $list['attributes'];
-        $this->variationUnits = $list['units'];
+        $this->attributes = $params['variationAttributeMap']['attributes'];
+        $this->variations = $params['variationAttributeMap']['variations'];
 
         $this->customerShowNetPrices = $customerService->showNetPrices();
 
+        $defaultCategoryId = 0;
+        $plentyId = (int) pluginApp(Application::class)->getPlentyId();
+        foreach($this->item['documents'][0]['data']['defaultCategories'] as $category)
+        {
+            if ($category['plentyId'] == $plentyId)
+            {
+                $defaultCategoryId = $category['id'];
+                break;
+            }
+        }
+
+        if($defaultCategoryId > 0)
+        {
+            /** @var CategoryService $categoryService */
+            $categoryService = pluginApp(CategoryService::class);
+            $this->defaultCategory = $categoryService->get($defaultCategoryId);
+        }
+        
         $this->bodyClasses[] = "item-" . $itemData['item']['id'];
         $this->bodyClasses[] = "variation-" . $itemData['variation']['id'];
 		$itemRep =  pluginApp(ItemRepositoryContract::class);
