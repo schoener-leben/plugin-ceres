@@ -1,6 +1,7 @@
 {% extends getPartial('page-design') %}
 {% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
 {% import "Ceres::Category.Macros.CategoryTree" as Tree %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">  
 
 {% set overrideSearchFilters = LayoutContainer.show("Ceres::Search.Filter", facets ) %}
 
@@ -45,7 +46,7 @@
 						</div>
 						<div class="desc50">
 						</div>
-						<span class="moreText"> mehr lesen ... </span>
+						<span class="moreText"> <i class="fas fa-angle-double-up"></i></span>
 						</div>
                     {% endif %}
                 </div>
