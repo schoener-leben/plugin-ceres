@@ -1,56 +1,42 @@
 import { MediaQueryHelper } from "../../helper/MediaQueryHelper";
-import { isNullOrUndefined, isDefined } from "../../helper/utils";
 
 Vue.component("mobile-navigation", {
 
-    props: {
-        template: {
-            default: "#vue-mobile-navigation",
-            type: String
-        },
-        initialCategory: Object,
-        breakpoints: {
-            type: Array,
-            default: () => ["xs", "sm", "md"]
-        }
-    },
+    props: [
+        "template",
+        "initialCategory"
+    ],
 
     data()
     {
         return {
-            dataContainer1: {
-                parent: {},
-                categories: []
-            },
-            dataContainer2: {
-                parent: {},
-                categories: []
-            },
+            dataContainer1: [],
+            dataContainer2: [],
             useFirstContainer: false,
-            isNavigationInitialized: false,
-            selectedCategory: null
+            breadcrumbs: [],
+            isNavigationInitialized: false
         };
     },
 
     computed:
     {
-        breadcrumbs()
+        parentCategories()
         {
-            const breadcrumbs = [];
-            let container = this.useFirstContainer ? this.dataContainer2 : this.dataContainer1;
+            const dataContainer = this.useFirstContainer ? this.dataContainer2 : this.dataContainer1;
 
-            while (container && container.parent && Object.keys(container.parent).length)
+            if (dataContainer[0] && dataContainer[0].parent)
             {
-                breadcrumbs.unshift(
-                    {
-                        name: container.parent.details[0].name,
-                        parent: container.parent || null
-                    });
+                if (dataContainer[0].parent.parent)
+                {
+                    // returns upper level
+                    return dataContainer[0].parent.parent.children;
+                }
 
-                container = container.parent;
+                // return highest level of navigation
+                return this.navigationTree;
             }
 
-            return breadcrumbs;
+            return false;
         },
 
         ...Vuex.mapState({
@@ -61,8 +47,6 @@ Vue.component("mobile-navigation", {
     created()
     {
         this.addEventListener();
-
-        this.$store.commit("setCurrentCategory", this.initialCategory);
     },
 
     methods:
@@ -71,27 +55,25 @@ Vue.component("mobile-navigation", {
         {
             const QueryHelper = new MediaQueryHelper();
             const breakpoint = QueryHelper.getCurrentBreakpoint();
-
-            QueryHelper.addFunction(this.loadInitialTree, this.breakpoints);
-
-            if (this.breakpoints.includes(breakpoint))
+            const onMobileBreakpoint = () =>
             {
-                this.loadInitialTree();
-            }
-        },
+                if (this.navigationTree.length <= 0)
+                {
+                    this.$store.dispatch("loadNavigationTree")
+                        .then(() =>
+                        {
+                            this.initNavigation();
+                        });
+                }
+            };
 
-        loadInitialTree()
-        {
-            if (this.navigationTree.length <= 0)
+            QueryHelper.addFunction(onMobileBreakpoint, ["xs", "md", "sm"]);
+
+            if (breakpoint === "md" ||
+                breakpoint === "sm" ||
+                breakpoint === "xs")
             {
-                const categoryId = this.initialCategory && this.initialCategory.id ? this.initialCategory.id : null;
-
-                this.$store.dispatch("loadPartialNavigationTree", categoryId)
-                    .then(response =>
-                    {
-                        this.$store.commit("setNavigationTree", response);
-                        this.initNavigation();
-                    });
+                onMobileBreakpoint();
             }
         },
 
@@ -110,8 +92,7 @@ Vue.component("mobile-navigation", {
                 }
             }
 
-            this.dataContainer1.parent = null;
-            this.dataContainer1.categories = this.navigationTree;
+            this.dataContainer1 = this.navigationTree;
             this.isNavigationInitialized = true;
         },
 
@@ -119,105 +100,56 @@ Vue.component("mobile-navigation", {
         {
             if (currentCategory)
             {
-                if (currentCategory.children)
+                if (currentCategory.children && currentCategory.showChildren)
                 {
-                    this.slideTo(currentCategory);
+                    this.slideTo(currentCategory.children);
                 }
                 else if (currentCategory.parent)
                 {
-                    this.slideTo(currentCategory.parent);
+                    this.slideTo(currentCategory.parent.children);
                 }
             }
         },
 
-        slideTo(category, back)
+        slideTo(children, back)
         {
-            const children = isDefined(category) ? category.children : this.navigationTree;
-            const categoryId = isDefined(category) ? category.id : null;
-
-            this.loadPartialTree(categoryId);
-            this.selectedCategory = category;
+            back = !!back;
 
             if (this.useFirstContainer)
             {
-                this.dataContainer1.parent = category;
-                this.dataContainer1.categories = children || [];
+                this.dataContainer1 = children;
 
-                $("#menu-2").trigger("menu-deactivated", { back: !!back });
-                $("#menu-1").trigger("menu-activated", { back: !!back });
+                $("#menu-2").trigger("menu-deactivated", { back: back });
+                $("#menu-1").trigger("menu-activated", { back: back });
             }
             else
             {
-                this.dataContainer2.parent = category;
-                this.dataContainer2.categories = children || [];
+                this.dataContainer2 = children;
 
-                $("#menu-1").trigger("menu-deactivated", { back: !!back });
-                $("#menu-2").trigger("menu-activated", { back: !!back });
+                $("#menu-1").trigger("menu-deactivated", { back: back });
+                $("#menu-2").trigger("menu-activated", { back: back });
             }
 
             this.useFirstContainer = !this.useFirstContainer;
+            this.buildBreadcrumbs();
         },
 
-        loadPartialTree(categoryId)
+        buildBreadcrumbs()
         {
-            // eslint-disable-next-line eqeqeq
-            if (this.selectedCategory != categoryId ||
-                (isDefined(this.selectedCategory) && this.selectedCategory.id !== categoryId))
+            this.breadcrumbs = [];
+
+            let root = this.useFirstContainer ? this.dataContainer2[0] : this.dataContainer1[0];
+
+            while (root.parent)
             {
-                this.$store.dispatch("loadPartialNavigationTree", categoryId)
-                    .then(response =>
+                this.breadcrumbs.unshift(
                     {
-                        if ((isNullOrUndefined(this.selectedCategory) && isNullOrUndefined(categoryId)) ||
-                            (isDefined(this.selectedCategory) && this.selectedCategory.id === categoryId))
-                        {
-                            this.$store.commit("setNavigationTree", response);
-                            this.updateDataContainers(categoryId);
-                        }
+                        name: root.parent.details[0].name,
+                        layer: root.parent ? root.parent.children : this.navigationTree
                     });
+
+                root = root.parent;
             }
-        },
-
-        updateDataContainers(categoryId)
-        {
-            const containers = ["dataContainer1", "dataContainer2"];
-            const category = this.getCategoryById(categoryId, this.navigationTree);
-
-            for (const container of containers)
-            {
-                if (category)
-                {
-                    this[container].parent = category;
-                    this[container].categories = category.children;
-                }
-                else
-                {
-                    // root level
-                    this[container].parent = null;
-                    this[container].categories = this.navigationTree;
-                }
-            }
-        },
-
-        getCategoryById(categoryId, tree)
-        {
-            for (const cat of tree)
-            {
-                if (categoryId === cat.id)
-                {
-                    return cat;
-                }
-                else if (cat.children)
-                {
-                    const foundCat = this.getCategoryById(categoryId, cat.children);
-
-                    if (foundCat)
-                    {
-                        return foundCat;
-                    }
-                }
-            }
-
-            return null;
         },
 
         closeNavigation()

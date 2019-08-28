@@ -11,19 +11,13 @@ Vue.component("variation-select", {
         {
             type: String,
             default: "#vue-variation-select"
-        },
-        forceContent:
-        {
-            type: Boolean,
-            default: false
         }
     },
 
     data()
     {
         return {
-            filteredVariationsCache: {},
-            lastContentCount: 0
+            filteredVariationsCache: {}
         };
     },
 
@@ -51,23 +45,6 @@ Vue.component("variation-select", {
             }
 
             return false;
-        },
-
-        /**
-         * returns all units, selectable by current selection
-         * prop 'forceContent' with value true will return all units, without filtering
-         */
-        possibleUnits()
-        {
-            const possibleUnits = {};
-            const variations = this.forceContent ? this.variations : this.filterVariations(null, null, null, true);
-
-            for (const variation of variations)
-            {
-                possibleUnits[variation.unitCombinationId] = variation.unitName;
-            }
-
-            return possibleUnits;
         },
 
         ...Vuex.mapState({
@@ -119,8 +96,6 @@ Vue.component("variation-select", {
             {
                 this.unsetInvalidSelection(attributeId, attributeValueId, unitId);
             }
-
-            this.lastContentCount = Object.keys(this.possibleUnits).length;
         },
 
         /**
@@ -292,7 +267,7 @@ Vue.component("variation-select", {
 
             if (invalidSelection.newUnit)
             {
-                if (this.lastContentCount > 1 && Object.keys(this.possibleUnits).length > 1 && !isNull(this.selectedUnit))
+                if (!isNull(this.selectedUnit))
                 {
                     messages.push(
                         TranslationService.translate("Ceres::Template.singleItemNotAvailable", { name:
@@ -323,14 +298,13 @@ Vue.component("variation-select", {
          * @param {number} unitId
          * @param {boolean} strict
          */
-        filterVariations(attributes, unitId, strict, ignoreUnit)
+        filterVariations(attributes, unitId, strict)
         {
             attributes = attributes || this.selectedAttributes;
             unitId = unitId || this.selectedUnit;
             strict = !!strict;
-            ignoreUnit = !!ignoreUnit;
 
-            const key = `${ JSON.stringify(attributes) }_${ unitId }_${ strict }_${ ignoreUnit }`;
+            const key = `${JSON.stringify(attributes)}_${unitId}_${strict}`;
 
             if (isDefined(this.filteredVariationsCache[key]))
             {
@@ -339,10 +313,12 @@ Vue.component("variation-select", {
 
             const uniqueValues = [...new Set(Object.values(attributes))];
             const isEmptyOptionSelected = uniqueValues.length === 1 && isNull(uniqueValues[0]);
+
+            // eslint-disable-next-line complexity
             const filteredVariations = this.variations.filter(variation =>
             {
                 // the selected unit is not matching
-                if (!ignoreUnit && variation.unitCombinationId !== unitId)
+                if (variation.unitCombinationId !== unitId)
                 {
                     return false;
                 }

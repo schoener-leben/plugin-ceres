@@ -21,9 +21,6 @@ class DefaultSingleItemPreset implements ContentPreset
     private $twoColumnWidget;
 
     /** @var PresetWidgetFactory */
-    private $secondTwoColumnWidget;
-
-    /** @var PresetWidgetFactory */
     private $stickyContainer;
 
     /** @var PresetWidgetFactory */
@@ -39,7 +36,6 @@ class DefaultSingleItemPreset implements ContentPreset
         $this->translator = pluginApp(Translator::class);
 
         $this->createTwoColumnWidget();
-        $this->createSecondTwoColumnWidget();
         $this->createItemImageWidget();
         $this->createTabWidget();
         $this->createStickyContainer();
@@ -63,8 +59,7 @@ class DefaultSingleItemPreset implements ContentPreset
 
     private function createStickyContainer()
     {
-        $this->stickyContainer = $this->twoColumnWidget->createChild('second', 'Ceres::StickyContainerWidget')
-            ->withSetting('stickTo', 'stickToBody');
+        $this->stickyContainer = $this->twoColumnWidget->createChild('second', 'Ceres::StickyContainerWidget');
     }
 
     private function createTwoColumnWidget()
@@ -72,12 +67,6 @@ class DefaultSingleItemPreset implements ContentPreset
         $this->twoColumnWidget = $this->preset->createWidget('Ceres::TwoColumnWidget')
             ->withSetting('layout', 'sevenToFive')
             ->withSetting('customClass','mt-5');
-    }
-
-    private function createSecondTwoColumnWidget()
-    {
-        $this->secondTwoColumnWidget = $this->preset->createWidget('Ceres::TwoColumnWidget')
-            ->withSetting('layout', 'sevenToFive');
     }
 
     private function createManufacturer()
@@ -244,7 +233,7 @@ class DefaultSingleItemPreset implements ContentPreset
                       array('title' => $titleTabTechData, 'uuid' => $uuidTabTechData),
                       array('title' => $titleTabMoreDetails, 'uuid' => $uuidTabMoreDetails));
 
-        $this->tabWidget = $this->secondTwoColumnWidget->createChild('first', 'Ceres::TabWidget')
+        $this->tabWidget = $this->twoColumnWidget->createChild('first', 'Ceres::TabWidget')
             ->withSetting('tabs', $tabs)
             ->withSetting('spacing.customMargin', true)
             ->withSetting('spacing.margin.bottom.value', 5)
@@ -300,8 +289,7 @@ class DefaultSingleItemPreset implements ContentPreset
             ->withSetting('appearance', 'primary')
             ->withSetting('spacing.customMargin', true)
             ->withSetting('spacing.margin.bottom.value', 3)
-            ->withSetting('spacing.margin.bottom.unit', null)
-            ->withSetting('forceContent', false);
+            ->withSetting('spacing.margin.bottom.unit', null);
     }
 
     private function getShopBuilderDataFieldProvider($provider,$itemDataFields)
