@@ -4,6 +4,6 @@
   "defaultValue": "",
   "options": {
     "name": "Widget.customClass",
-    "tooltipText": "Widget.customClassTooltip"
+    "tooltip": "Widget.customClassTooltip"
   }
 }

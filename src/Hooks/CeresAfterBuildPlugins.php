@@ -2,7 +2,6 @@
 
 namespace Ceres\Hooks;
 
-use Ceres\Helper\BuildHash;
 use Plenty\Modules\Plugin\Events\AfterBuildPlugins;
 use Plenty\Modules\ContentCache\Contracts\ContentCacheInvalidationRepositoryContract;
 use Plenty\Modules\Plugin\PluginSet\Models\PluginSet;
@@ -26,11 +25,6 @@ class CeresAfterBuildPlugins
                     $contentCacheInvalidationRepo->invalidateAll($webstore->storeIdentifier);
                 }
             }
-        }
-
-        if ( $hasResourceChanges )
-        {
-            BuildHash::unset();
         }
     }
 }
