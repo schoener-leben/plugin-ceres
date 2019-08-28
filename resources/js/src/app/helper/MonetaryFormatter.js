@@ -141,20 +141,14 @@ const MonetaryFormatter = (function()
             }
             case T_DECIMAL: {
                 const numberOfDecimals = parseInt(partial.value);
-                let result = /^\d+(?:\.(\d+))?$/g.exec(value);
 
-                if (!isNullOrUndefined(result) && !isNullOrUndefined(result[1]))
-                {
-                    result = result[1].substr(0, numberOfDecimals);
-                }
-                else
-                {
-                    result = "";
-                }
+                let result = Math.round(value * Math.pow(10, numberOfDecimals))
+                    .toFixed(0)
+                    .substr(-1 * numberOfDecimals, numberOfDecimals);
 
                 while (result.length < numberOfDecimals)
                 {
-                    result = result + "0";
+                    result = "0" + result;
                 }
 
                 return this.separatorDecimals + result;
@@ -169,7 +163,7 @@ const MonetaryFormatter = (function()
                 return partial.value;
             }
             default: {
-                console.warn("Unknown pattern type: " + partial.type);
+                console.warn("Unkown pattern type: " + partial.type);
                 return "";
             }
             }

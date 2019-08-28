@@ -92,11 +92,10 @@ Vue.component("registration", {
                 .done(response =>
                 {
                     ApiService.setToken(response);
+                    document.dispatchEvent(new CustomEvent("onSignUpSuccess", { detail: userObject }));
 
                     if (!response.code)
                     {
-                        document.dispatchEvent(new CustomEvent("onSignUpSuccess", { detail: userObject }));
-
                         NotificationService.success(
                             TranslationService.translate("Ceres::Template.regSuccessful")
                         ).closeAfter(3000);

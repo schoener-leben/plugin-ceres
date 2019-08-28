@@ -159,8 +159,7 @@ Vue.component("basket-list-item", {
                                 {
                                     type: "error",
                                     message: TranslationService.translate(
-                                        "Ceres::Template." + ExceptionMap.get(error.data.exceptionCode.toString()),
-                                        error.data.placeholder
+                                        "Ceres::Template." + ExceptionMap.get(error.data.exceptionCode.toString())
                                     )
                                 }
                             );
@@ -169,8 +168,7 @@ Vue.component("basket-list-item", {
                         {
                             NotificationService.error(
                                 TranslationService.translate(
-                                    "Ceres::Template." + ExceptionMap.get(error.data.exceptionCode.toString()),
-                                    error.data.placeholder
+                                    "Ceres::Template." + ExceptionMap.get(error.data.exceptionCode.toString())
                                 )
                             ).closeAfter(5000);
                         }

@@ -188,8 +188,7 @@ Vue.component("add-to-basket", {
                         {
                             NotificationService.error(
                                 TranslationService.translate(
-                                    "Ceres::Template." + ExceptionMap.get(error.data.exceptionCode.toString()),
-                                    error.data.placeholder
+                                    "Ceres::Template." + ExceptionMap.get(error.data.exceptionCode.toString())
                                 )
                             ).closeAfter(5000);
                         }
