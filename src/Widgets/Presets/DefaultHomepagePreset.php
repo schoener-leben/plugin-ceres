@@ -31,8 +31,10 @@ class DefaultHomepagePreset implements ContentPreset
         $this->ceresConfig = pluginApp(CeresConfig::class);
         $this->translator = pluginApp(Translator::class);
 
+
         $this->preset->createWidget("Ceres::TitleBarWidget")
-            ->withSetting("appearance", "primary");
+            ->withSetting("appearance", "primary")
+            ->withSetting("text", $this->translator->trans("Ceres::Template.headerCompanyName"));
 
         //
         // FIRST ROW

@@ -13,7 +13,7 @@ class TitleBarWidget extends BaseWidget
         $text = $widgetSettings["content"]["mobile"];
         if ( strlen($widgetSettings["text"]["mobile"]) && !strlen($text) )
         {
-            $text = $widgetSettings["text"]["mobile"];
+            $text = "<h1 class='align-center'>" . $widgetSettings["text"]["mobile"] . "</h1>";
         }
         return [
             "text" => $text

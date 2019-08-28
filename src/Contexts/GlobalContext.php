@@ -3,7 +3,6 @@
 namespace Ceres\Contexts;
 
 use Ceres\Config\CeresConfig;
-use Ceres\Helper\BuildHash;
 use IO\Helper\ContextInterface;
 use IO\Services\BasketService;
 use IO\Services\CategoryService;
@@ -44,7 +43,6 @@ class GlobalContext implements ContextInterface
     public $templateEvent;
     public $isShopBuilder;
     public $bodyClasses;
-    public $buildHash;
 
     public function init($params)
     {
@@ -120,8 +118,6 @@ class GlobalContext implements ContextInterface
         }
 
         $this->bodyClasses[] = $templateClass;
-
-        $this->buildHash = BuildHash::get();
     }
 
     protected function getParam($key, $defaultValue = null)

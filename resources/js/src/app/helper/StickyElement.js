@@ -113,11 +113,17 @@ export class StickyElement
 
     checkElement(skipOffsetCalculation)
     {
-        const oldValue        = this.position || {};
-        const elementRect     = this.el.getBoundingClientRect();
-        const placeholderRect = this.placeholder.getBoundingClientRect();
-        const containerRect   = this.getContainerElement().getBoundingClientRect();
-        const maxBottom       = Math.min(containerRect.bottom - elementRect.height - this.offsetTop - this.offsetBottom, 0);
+        /*
+        if (isNullOrUndefined(this.el) || isNullOrUndefined(this.placeholder))
+        {
+            return;
+        }
+        */
+        const oldValue          = this.position || {};
+        const elementRect       = this.el.getBoundingClientRect();
+        const placeholderRect   = this.placeholder.getBoundingClientRect();
+        const containerRect     = this.getContainerElement().getBoundingClientRect();
+        const maxBottom         = Math.min(containerRect.bottom - elementRect.height - this.offsetTop - this.offsetBottom, 0);
 
         if (oldValue.height !== elementRect.height && !skipOffsetCalculation)
         {
@@ -145,10 +151,9 @@ export class StickyElement
 
         this.offsetTop = 0;
 
-        // Check if Custom Header
-        if (document.querySelector("[data-header-offset]"))
+        if (document.getElementById("page-header-parent"))
         {
-            const headerChildren = document.querySelector("[data-header-offset]").children;
+            const headerChildren = document.getElementById("page-header-parent").children;
 
             for (let i = 0; i < headerChildren.length; i++)
             {
@@ -157,10 +162,6 @@ export class StickyElement
                     this.offsetTop += headerChildren[i].getBoundingClientRect().height;
                 }
             }
-        }
-        else
-        {
-            this.offsetTop += document.getElementById("page-header").getBoundingClientRect().height;
         }
 
         this.offsetBottom = 0;

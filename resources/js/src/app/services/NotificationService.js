@@ -107,8 +107,7 @@ module.exports = (function($)
         if (notification.code > 0 && exceptionMap.has(notification.code.toString()))
         {
             notification.message = TranslationService.translate(
-                "Ceres::Template." + exceptionMap.get(notification.code.toString()),
-                notification.placeholder
+                "Ceres::Template." + exceptionMap.get(notification.code.toString())
             );
         }
         notifications.add(notification);
@@ -130,7 +129,6 @@ module.exports = (function($)
             id        : id,
             code      : data.code || 0,
             message   : data.message || data || "",
-            placeholder: data.placeholder || null,
             context   : context || "info",
             stackTrace: data.stackTrace || [],
             close     : close,
