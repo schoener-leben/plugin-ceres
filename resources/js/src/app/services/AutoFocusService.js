@@ -23,11 +23,6 @@ export function autoFocus()
 
 export function triggerAutoFocus(modal)
 {
-    if ( App.isShopBuilder )
-    {
-        return;
-    }
-
     let focusElements;
 
     if (modal)

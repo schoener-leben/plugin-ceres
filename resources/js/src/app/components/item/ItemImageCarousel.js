@@ -28,11 +28,6 @@ Vue.component("item-image-carousel", {
         {
             type: Boolean,
             default: true
-        },
-        animationStyle:
-        {
-            type: String,
-            default: "standard"
         }
     },
 
@@ -123,7 +118,8 @@ Vue.component("item-image-carousel", {
         initCarousel()
         {
             const imageCount = this.getImageCount();
-            const carouselSettings = {
+
+            $(this.$refs.single).owlCarousel({
                 autoHeight       : true,
                 dots             : this.showDots,
                 items            : 1,
@@ -151,14 +147,7 @@ Vue.component("item-image-carousel", {
                         350
                     ]);
                 }
-            };
-
-            if (this.animationStyle !== "standard")
-            {
-                carouselSettings.animateOut = this.animationStyle;
-            }
-
-            $(this.$refs.single).owlCarousel(carouselSettings);
+            });
 
             if (!isNullOrUndefined(window.lightbox))
             {

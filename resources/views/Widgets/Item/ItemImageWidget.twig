@@ -8,7 +8,6 @@
 {% set imageSize = widget.settings.imageSize.mobile %}
 {% set showThumbs = widget.settings.showThumbs.mobile %}
 {% set showDots = widget.settings.showDots.mobile %}
-{% set animationStyle = widget.settings.animationStyle.mobile %}
 
 {{ Twig.import("LayoutContainer", "Ceres::PageDesign.Macros.LayoutContainer") }}
 
@@ -20,8 +19,7 @@
             :max-quantity="{{ maxQuantity }}"
             image-url-accessor="{{ imageSize }}"
             :show-thumbs="{{ showThumbs | json_encode }}"
-            :show-dots="{{ showDots | json_encode }}"
-            animation-style="{{ animationStyle }}">
+            :show-dots="{{ showDots | json_encode }}">
         </item-image-carousel>
     {% else %}
         {{ ImageCarouselOverride }}
