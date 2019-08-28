@@ -12,7 +12,6 @@ export const exceptionMap = new Map(
         ["9", "notificationsBasketItemsRemoved"],
         ["10", "notificationsBasketItemsRemovedForLanguage"],
         ["11", "notificationsNoEmailEntered"],
-        ["12", "notificationsWarningOverselling"],
         ["110", "errorBasketItemVariationNotFound"],
         ["111", "errorBasketItemNotEnoughStockForVariation"],
         ["112", "errorBasketItemMaximumQuantityReachedForItem"],
