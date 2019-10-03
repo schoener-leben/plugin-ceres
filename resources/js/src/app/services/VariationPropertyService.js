@@ -3,6 +3,7 @@ import { orderArrayByKey, isDefined } from "../helper/utils";
 const PROPERTY_ORDER_BY_KEY = "position";
 const _cachedVariationProperties = {};
 
+// eslint-disable-next-line complexity
 export function transformVariationProperties(item, propertyTypes = [], displaySetting)
 {
     const variationId = item.variation.id;
@@ -14,7 +15,8 @@ export function transformVariationProperties(item, propertyTypes = [], displaySe
     {
         return _cachedVariationProperties[cacheKey];
     }
-    if (!(isDefined(variationProperties) && variationProperties.length))
+    if (!(isDefined(variationProperties) && variationProperties.length) ||
+        !(isDefined(variationPropertyGroups) && variationPropertyGroups.length))
     {
         return [];
     }
@@ -25,8 +27,7 @@ export function transformVariationProperties(item, propertyTypes = [], displaySe
 
     for (let property of variationProperties)
     {
-        property = property.property;
-
+        property = { ...property.property, values: property.values };
         const matchDisplaySetting = isDefined(displaySetting) && displaySetting.length ? property.display.includes(displaySetting) : true;
         const isCorrectType = isDefined(propertyTypes) && propertyTypes.length ? propertyTypes.includes(property.cast) : true;
 

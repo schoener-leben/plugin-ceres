@@ -1,21 +1,39 @@
-const ApiService          = require("services/ApiService");
-const NotificationService = require("services/NotificationService");
-const ModalService        = require("services/ModalService");
-const AutoFocusService    = require("services/AutoFocusService");
+const ApiService          = require("../../../services/ApiService");
+const NotificationService = require("../../../services/NotificationService");
+const ModalService        = require("../../../services/ModalService");
+const AutoFocusService    = require("../../../services/AutoFocusService");
 
-import ValidationService from "services/ValidationService";
-import TranslationService from "services/TranslationService";
+import ValidationService from "../../../services/ValidationService";
+import TranslationService from "../../../services/TranslationService";
+import Vue from "vue";
 
 Vue.component("login", {
 
-    delimiters: ["${", "}"],
-
-    props: [
-        "modalElement",
-        "backlink",
-        "hasToForward",
-        "template"
-    ],
+    props:
+    {
+        template:
+        {
+            type: String,
+            default: "#vue-login"
+        },
+        backlink:
+        {
+            type: String
+        },
+        modalElement: {
+            type: String
+        },
+        hasToForward:
+        {
+            type: Boolean,
+            default: false
+        },
+        buttonSize:
+        {
+            type: String,
+            default: null
+        }
+    },
 
     data()
     {
@@ -32,8 +50,6 @@ Vue.component("login", {
         this.$nextTick(() =>
         {
             this.loginFields = $(".login-container").find(".input-unit");
-
-            this.removeLoginModal();
 
             AutoFocusService.triggerAutoFocus();
         });
@@ -72,16 +88,6 @@ Vue.component("login", {
                 {
                     ValidationService.markInvalidFields(invalidFields, "error");
                 });
-        },
-
-        removeLoginModal()
-        {
-            if (!this.modalElement)
-            {
-                const loginModal = document.getElementById("login");
-
-                loginModal.parentNode.removeChild(loginModal);
-            }
         },
 
         /**
