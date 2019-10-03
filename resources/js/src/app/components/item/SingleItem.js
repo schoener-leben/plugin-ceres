@@ -1,6 +1,8 @@
 import { transformVariationProperties } from "../../services/VariationPropertyService";
 import { get } from "../../helper/get";
 import { isNullOrUndefined } from "../../helper/utils";
+import Vue from "vue";
+import { mapState, mapGetters } from "vuex";
 
 Vue.component("single-item", {
 
@@ -33,17 +35,17 @@ Vue.component("single-item", {
 
         transformedVariationProperties()
         {
-            return transformVariationProperties(this.currentVariation, ["empty"], "showInItemListing");
+            return transformVariationProperties(this.currentVariation, [], "showInItemListing");
         },
 
-        ...Vuex.mapState({
+        ...mapState({
             currentVariation: state => state.item.variation.documents[0].data,
             isVariationSelected: state => state.variationSelect.isVariationSelected,
             attributes: state => state.variationSelect.attributes,
             units: state => state.variationSelect.units
         }),
 
-        ...Vuex.mapGetters([
+        ...mapGetters([
             "variationTotalPrice",
             "variationMissingProperties",
             "variationGroupedProperties",
