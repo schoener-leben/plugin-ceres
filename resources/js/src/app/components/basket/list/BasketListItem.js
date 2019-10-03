@@ -1,18 +1,32 @@
-import ExceptionMap from "exceptions/ExceptionMap";
-import TranslationService from "services/TranslationService";
+import ExceptionMap from "../../../exceptions/ExceptionMap";
+import TranslationService from "../../../services/TranslationService";
 import { isNullOrUndefined } from "../../../helper/utils";
 import { transformBasketItemProperties } from "../../../services/VariationPropertyService";
+import Vue from "vue";
+import { mapState } from "vuex";
 
-const NotificationService = require("services/NotificationService");
+const NotificationService = require("../../../services/NotificationService");
 
 Vue.component("basket-list-item", {
-    props: [
-        "basketItem",
-        "size",
-        "language",
-        "template",
-        "isPreview"
-    ],
+    props:
+    {
+        template:
+        {
+            type: String,
+            default: "#vue-basket-list-item"
+        },
+        basketItem: Object,
+        basketDetailsData:
+        {
+            type: Array,
+            default: () => []
+        },
+        isPreview:
+        {
+            type: Boolean,
+            default: false
+        }
+    },
 
     data()
     {
@@ -76,12 +90,7 @@ Vue.component("basket-list-item", {
 
         unitPrice()
         {
-            if (!isNullOrUndefined(this.basketItem.variation.data.prices.specialOffer))
-            {
-                return this.basketItem.variation.data.prices.specialOffer.unitPrice.value;
-            }
-
-            return this.basketItem.variation.data.prices.default.unitPrice.value;
+            return this.basketItem.price;
         },
 
         basePrice()
@@ -96,10 +105,10 @@ Vue.component("basket-list-item", {
 
         transformedVariationProperties()
         {
-            return transformBasketItemProperties(this.basketItem, ["empty"], "displayInOrderProcess");
+            return transformBasketItemProperties(this.basketItem, [], "displayInOrderProcess");
         },
 
-        ...Vuex.mapState({
+        ...mapState({
             isBasketLoading: state => state.basket.isBasketLoading,
             isCheckoutReadonly: state => state.checkout.readOnly,
             showNetPrice: state => state.basket.showNetPrices
@@ -142,7 +151,7 @@ Vue.component("basket-list-item", {
 
                 const origQty = this.basketItem.quantity;
 
-                this.$store.dispatch("updateBasketItemQuantity", { basketItem: this.basketItem, quantity: quantity }).then(
+                this.$store.dispatch("updateBasketItemQuantity", { id: this.basketItem.id, variationId: this.basketItem.variation.id, quantity: quantity }).then(
                     response =>
                     {
                         document.dispatchEvent(new CustomEvent("afterBasketItemQuantityUpdated", { detail: this.basketItem }));
@@ -190,6 +199,11 @@ Vue.component("basket-list-item", {
             }
 
             return false;
+        },
+
+        isDataFieldVisible(value)
+        {
+            return this.basketDetailsData.includes(value);
         }
     }
 });

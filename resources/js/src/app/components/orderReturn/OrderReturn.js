@@ -1,9 +1,33 @@
+import Vue from "vue";
+import { mapState, mapMutations, mapActions } from "vuex";
+import { navigateTo } from "../../services/UrlService";
+import TranslationService from "../../services/TranslationService";
+import NotificationService from "../../services/NotificationService";
+
 Vue.component("order-return", {
 
-    props: [
-        "initOrderData",
-        "template"
-    ],
+    props: {
+        template:
+        {
+            type: String,
+            default: "#vue-order-return"
+        },
+        initOrderData:
+        {
+            type: Object,
+            required: true
+        },
+        buttonSize:
+        {
+            type: String,
+            default: null
+        },
+        itemDetailsData:
+        {
+            type: Array,
+            default: () => []
+        }
+    },
 
     data()
     {
@@ -17,11 +41,20 @@ Vue.component("order-return", {
         this.$store.commit("setOrderReturnData", this.initOrderData);
     },
 
-    computed: Vuex.mapState({
-        orderData: state => state.orderReturn.orderData,
-        orderReturnItems: state => state.orderReturn.orderReturnItems,
-        isDisabled: state => state.orderReturn.orderReturnItems.length === 0
-    }),
+    computed:
+    {
+        amount()
+        {
+            return this.orderData.order.amounts.find(amount => !amount.isSystemCurrency) || this.orderData.order.amounts[0];
+        },
+
+        ...mapState({
+            orderData: state => state.orderReturn.orderData,
+            orderReturnItems: state => state.orderReturn.orderReturnItems,
+            isDisabled: state => state.orderReturn.orderReturnItems.length === 0,
+            showNetPrices: state => state.basket.showNetPrices
+        })
+    },
 
     methods:
     {
@@ -37,8 +70,11 @@ Vue.component("order-return", {
             this.sendOrderReturn().then(
                 response =>
                 {
-                    window.open("/return-confirmation", "_self");
                     $(this.$refs.orderReturnConfirmation).modal("hide");
+                    navigateTo(window.location.origin);
+                    NotificationService.success(
+                        TranslationService.translate("Ceres::Template.returnConfirmationInfo")
+                    ).closeAfter(3000);
                 },
                 error =>
                 {
@@ -52,11 +88,11 @@ Vue.component("order-return", {
             vueEventHub.$emit("select-all-items");
         },
 
-        ...Vuex.mapMutations([
+        ...mapMutations([
             "updateOrderReturnNote"
         ]),
 
-        ...Vuex.mapActions([
+        ...mapActions([
             "sendOrderReturn"
         ])
     }

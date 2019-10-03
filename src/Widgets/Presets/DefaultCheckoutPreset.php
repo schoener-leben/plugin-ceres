@@ -83,8 +83,29 @@ class DefaultCheckoutPreset implements ContentPreset
     
     private function createBasketWidget()
     {
+        $this->twoColumnWidget->createChild('second', 'Ceres::InlineTextWidget')
+            ->withSetting('text', '<h3>{{ trans("Ceres::Template.checkoutBasket") }}</h3>')
+            ->withSetting("appearance", "none")
+            ->withSetting("spacing.customPadding", true)
+            ->withSetting("spacing.padding.top.value", 0)
+            ->withSetting("spacing.padding.top.unit", null)
+            ->withSetting("spacing.padding.bottom.value", 0)
+            ->withSetting("spacing.padding.bottom.unit", null)
+            ->withSetting("spacing.padding.left.value", 0)
+            ->withSetting("spacing.padding.left.unit", null)
+            ->withSetting("spacing.padding.right.value", 0)
+            ->withSetting("spacing.padding.right.unit", null);
+
+        $this->twoColumnWidget->createChild('second', 'Ceres::SeparatorWidget')
+            ->withSetting("customMargin", true)
+            ->withSetting("margin.top.value", 1)
+            ->withSetting("margin.top.unit", null)
+            ->withSetting("margin.bottom.value", 3)
+            ->withSetting("margin.bottom.unit", null);
+
         $this->twoColumnWidget->createChild('second','Ceres::BasketWidget')
-            ->withSetting('appearance', 'primary');
+            ->withSetting('appearance', 'primary')
+            ->withSetting('basketDetailsData', ['']);
     }
     
     private function createContactWishWidget()
@@ -114,15 +135,13 @@ class DefaultCheckoutPreset implements ContentPreset
     
     private function createPlaceOrderWidget()
     {
-        $this->stickyContainer->createChild('sticky','Ceres::PlaceOrderWidget')
-            ->withSetting('buttonSize', '');
+        $this->stickyContainer->createChild('sticky','Ceres::PlaceOrderWidget');
     }
 
     private function createCancelPaymentWidget()
     {
         $this->stickyContainer->createChild('sticky', 'Ceres::CancelPaymentWidget')
-            ->withSetting('appearance', 'primary')
-            ->withSetting('buttonSize', 'md');
+            ->withSetting('appearance', 'primary');
     }
     
     private function createShippingPrivacyCheckWidget()

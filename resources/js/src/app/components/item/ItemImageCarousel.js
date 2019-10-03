@@ -1,5 +1,9 @@
 import { isNullOrUndefined } from "../../helper/utils";
-import TranslationService from "services/TranslationService";
+import TranslationService from "../../services/TranslationService";
+import Vue from "vue";
+import "owl.carousel";
+import lightbox from "lightbox2";
+import { mapState } from "vuex";
 
 Vue.component("item-image-carousel", {
 
@@ -65,7 +69,7 @@ Vue.component("item-image-carousel", {
             ).slice(0, this.maxQuantity);
         },
 
-        ...Vuex.mapState({
+        ...mapState({
             currentVariation: state => state.item.variation
         })
     },
@@ -160,12 +164,12 @@ Vue.component("item-image-carousel", {
 
             $(this.$refs.single).owlCarousel(carouselSettings);
 
-            if (!isNullOrUndefined(window.lightbox))
+            if (!isNullOrUndefined(lightbox))
             {
-                window.lightbox.option({
+                lightbox.option({
                     wrapAround: true
                 });
-                window.lightbox.imageCountLabel = (current, total) =>
+                lightbox.imageCountLabel = (current, total) =>
                 {
                     if (isNullOrUndefined(imageCount) || imageCount <= 1)
                     {
@@ -183,19 +187,19 @@ Vue.component("item-image-carousel", {
                     return TranslationService.translate("Ceres::Template.singleItemImagePreviewCaption", { current: current, total: imageCount });
                 };
 
-                const originalFn = window.lightbox.changeImage;
+                const originalFn = lightbox.changeImage;
 
-                window.lightbox.changeImage = imageNumber =>
+                lightbox.changeImage = imageNumber =>
                 {
-                    if (window.lightbox.currentImageIndex === 0 && imageNumber === window.lightbox.album.length - 1)
+                    if (lightbox.currentImageIndex === 0 && imageNumber === lightbox.album.length - 1)
                     {
                         imageNumber--;
                     }
-                    else if (window.lightbox.currentImageIndex === window.lightbox.album.length - 1 && imageNumber === 0)
+                    else if (lightbox.currentImageIndex === lightbox.album.length - 1 && imageNumber === 0)
                     {
                         imageNumber++;
                     }
-                    return originalFn.call(window.lightbox, imageNumber);
+                    return originalFn.call(lightbox, imageNumber);
                 };
             }
 
