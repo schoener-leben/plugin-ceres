@@ -1,5 +1,30 @@
 # Release Notes für Ceres
 
+## v4.3.4 (2019-10-17) <a href="https://github.com/plentymarkets/plugin-ceres/compare/4.3.3...4.3.4" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### TODO 
+
+- Für die Verwendung von Ceres Version 4.3.4 muss das Plugin IO auf die aktuelle Version 4.3.3 aktualisiert werden.
+
+### Behoben
+
+- Der Wert von Bestellmerkmalen vom Typ "Auswahl" wird wieder korrekt im Warenkorb dargestellt.
+- Veraltete Einstellungen für Button-Größen werden wieder korrekt interpretiert.
+- Auftragsdokumente konnten bei Gastbestellungen nicht angezeigt werden. Dies wurde behoben.
+- Nach dem Hinzufügen von Artikeln mit Bestellmerkmalen wird das Bestätigungs-Overlay wieder korrekt angezeigt.
+- Der Assistent hat einen ungültigen Wert für die Option zur Position der Warenkorbvorschau gespeichert. Dies wurde behoben.
+- Im Assistenten werden die Standardwerte für Einstellungen nun korrekt geladen.
+- Beim Aufsplitten von Artikelpaketen kam es zu einer fehlerhaften Anzeige. Dies wurde behoben.
+
+## v4.3.3 (2019-10-08) <a href="https://github.com/plentymarkets/plugin-ceres/compare/4.3.2...4.3.3" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Behoben
+
+- Ein Fehler führte dazu, dass Varianteneigenschaften ohne Gruppen im Warenkorb nicht mehr angezeigt wurden. Dies wurde behoben.
+- Ein Fehler führte dazu, dass die Layout-Container im Auftragsdaten-Widget nicht korrekt mit Daten befüllt wurden. Dies wurde behoben.
+- Der LayoutContainer `Ceres::Scripts.AfterScriptsLoaded` wurde vor die Initalisierung von Vue.js verschoben, um das Registrieren eigener Vue-Komponenten wieder zu ermöglichen.
+- Ein Fehler führte dazu, dass keine ShopBuilder-Inhalte mehr angezeigt wurden, wenn das Datenschutz-Widget auf einer Seite platziert wurde. Dies wurde behoben.
+
 ## v4.3.2 (2019-10-02) <a href="https://github.com/plentymarkets/plugin-ceres/compare/4.3.1...4.3.2" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Behoben
