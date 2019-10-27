@@ -12,7 +12,7 @@
 			<span>Wir achten auf Deine Daten! Wir speichern deine Kontaktdaten nur zur Abwicklung Deines Einkaufes. Mehr dazu findest du in unserer Datenschutzerklärung.</span> 	
 
             <div class="text-right">
-                <button @click.prevent="validate" :disabled="isDisabled" class="btn btn-primary btn-medium btn-appearance" :class="buttonSize">
+                <button @click.prevent="validate" :disabled="isDisabled" class="btn btn-primary btn-medium btn-appearance" :class="buttonSizeClass">
                     <i v-waiting-animation="isDisabled" class="fa fa-arrow-right" aria-hidden="true"></i>
                     {{ trans("Ceres::Template.loginNext") }}
                 </button>
