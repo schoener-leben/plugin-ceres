@@ -95,8 +95,17 @@
 {% if services.template.getCurrentTemplate() == 'tpl.confirmation' %}
 <script src="https://tracking.s24.com/js/conversion-tracking.js"></script>
 <script>
-/*var pids = '$ItemIDListComma';
-var pids_list = pids.split(",");*/
+
+{% set itemListPipe = "" %}
+{% set itemListComma = "" %}
+{% for itemOrderData in data.order.orderItems %}
+        {% set itemListComma = itemListComma~itemOrderData.id %}
+        {% set itemListPipe = itemListPipe~itemOrderData.id %}
+        {% if not loop.last %}
+           {% set itemListComma = itemListComma~"," %}
+           {% set itemListPipe = itemListPipe~"|" %}
+        {% endif %}
+{% endfor %}
 window.s24ConversionTracking.track({
 'shop_id': 'uBQ50TgWhI',
 'order_id': '{{data.order.id}}',
@@ -104,7 +113,7 @@ window.s24ConversionTracking.track({
 'attributed_credit': 1.0,
 'currency': '{{data.order.amounts[0].currency}}',
 'new_customer': false,
-'skus': {{data.order.orderItems|json_encode  }}
+'skus':[{{itemListComma }}]
 });
 </script>
 
