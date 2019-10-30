@@ -95,17 +95,11 @@
 {% if services.template.getCurrentTemplate() == 'tpl.confirmation' %}
 <script src="https://tracking.s24.com/js/conversion-tracking.js"></script>
 <script>
-
-{% set itemListPipe = "" %}
-{% set itemListComma = "" %}
-{% for itemOrderData in data.order.orderItems %}
-        {% set itemListComma = itemListComma~itemOrderData.id %}
-        {% set itemListPipe = itemListPipe~itemOrderData.id %}
-        {% if not loop.last %}
-           {% set itemListComma = itemListComma~"," %}
-           {% set itemListPipe = itemListPipe~"|" %}
-        {% endif %}
+{% set variationIds = [] %}
+{% for item in orderData.order.orderItems %}
+  {% set variationIds = variationIds | merge('{{item.itemVariationId}}') %}
 {% endfor %}
+
 window.s24ConversionTracking.track({
 'shop_id': 'uBQ50TgWhI',
 'order_id': '{{data.order.id}}',
@@ -113,7 +107,7 @@ window.s24ConversionTracking.track({
 'attributed_credit': 1.0,
 'currency': '{{data.order.amounts[0].currency}}',
 'new_customer': false,
-'skus':[{{itemListComma }}]
+'skus':{{ variationIds |json_encode|raw }}
 });
 </script>
 
