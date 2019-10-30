@@ -95,9 +95,10 @@
 {% if services.template.getCurrentTemplate() == 'tpl.confirmation' %}
 <script src="https://tracking.s24.com/js/conversion-tracking.js"></script>
 <script>
-{% set variationIds = [] %}
+skus_arr = [];
 {% for item in orderData.order.orderItems %}
-  {% set variationIds = variationIds | merge({{item.itemVariationId | trans}}) %}
+  skus_arr.push('{{item.itemVariationId}}');
+  console.log(skus_arr);
 {% endfor %}
 
 window.s24ConversionTracking.track({
