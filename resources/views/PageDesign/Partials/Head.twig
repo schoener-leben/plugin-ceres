@@ -95,11 +95,6 @@
 {% if services.template.getCurrentTemplate() == 'tpl.confirmation' %}
 <script src="https://tracking.s24.com/js/conversion-tracking.js"></script>
 <script>
-skus_arr = [];
-{% for item in orderData.order.orderItems %}
-  skus_arr.push('{{item.itemVariationId}}');
-  console.log(skus_arr);
-{% endfor %}
 
 window.s24ConversionTracking.track({
 'shop_id': 'uBQ50TgWhI',
@@ -108,12 +103,12 @@ window.s24ConversionTracking.track({
 'attributed_credit': 1.0,
 'currency': '{{data.order.amounts[0].currency}}',
 'new_customer': false,
-'skus': [{
+'skus': [
    {% for item in data.order.orderItems %}
       {% if item.typeId == 1 %}
           '{{ item.itemVariationId }}'{% if not loop.last %},{% endif %}
       {% endif %}
-  {% endfor %}}]
+  {% endfor %}]
 });
 </script>
 
