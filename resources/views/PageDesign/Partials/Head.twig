@@ -97,7 +97,7 @@
 <script>
 {% set variationIds = [] %}
 {% for item in orderData.order.orderItems %}
-  {% set variationIds = variationIds | merge('{{item.itemVariationId}}') %}
+  {% set variationIds = variationIds | merge({{item.itemVariationId | trans}}) %}
 {% endfor %}
 
 window.s24ConversionTracking.track({
