@@ -20,7 +20,21 @@
         </div>
 
 
-        {% if category is defined and not ceresConfig.item.showCategoryImage and currentPage == 1 %}
+        
+
+    {% else %}
+
+
+        {{ component( "Ceres::ItemList.Components.CategoryItem") }}
+        {{ component( "Ceres::ItemList.Components.Filter.ItemFilterList") }}
+        {{ component( "Ceres::ItemList.Components.Filter.ItemFilterTagList") }}
+
+        {% if category is defined and ceresConfig.item.showCategoryImage %}
+            {% include "Ceres::Category.Item.Partials.CategoryParallaxImage" with { 'category': category } %}
+        {% endif %}
+
+        <div class="categoriegrid page-content container-max">
+		{% if category is defined and not ceresConfig.item.showCategoryImage and currentPage == 1 %}
             <div class="row mt-3">
                 <div class="col-12">
                     <h1 class="h2 category-title">{{ category.details[0].name }}</h1>
@@ -47,19 +61,6 @@
                 </div>
             </div>
         {% endif %}
-
-    {% else %}
-
-
-        {{ component( "Ceres::ItemList.Components.CategoryItem") }}
-        {{ component( "Ceres::ItemList.Components.Filter.ItemFilterList") }}
-        {{ component( "Ceres::ItemList.Components.Filter.ItemFilterTagList") }}
-
-        {% if category is defined and ceresConfig.item.showCategoryImage %}
-            {% include "Ceres::Category.Item.Partials.CategoryParallaxImage" with { 'category': category } %}
-        {% endif %}
-
-        <div class="categoriegrid page-content container-max">
 			<div class="filter" id= "filtertop"> </div>
             {% if isSearch %}
                 <div class="row mt-3">
