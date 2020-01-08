@@ -147,16 +147,16 @@
                         <div class="category-title">{{ trans("Ceres::Template.itemCategories") }}</div>
                         {{ include('Ceres::PageDesign.Partials.Header.SideNavigation.twig') }}
                     </div>
-						<div class="filter" id= "filterside">
+						<div class="filter" id= "filterside"> {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }} </div>	
 
-                {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
-                </div>								 
+                
+               							 
 
 
                     {{ LayoutContainer.show("Ceres::CategoryItem.SideNavBarBottom") }}
-					   </div>
+					</div>
             {% endif %}
-	</div>
+	
 
 
 
@@ -188,6 +188,7 @@
                         <p class="h3 text-muted mb-5 text-center">{{ trans("Ceres::Template.itemSearchNoResults", {"searchString": searchString}) }}</p>
                     {% endif %}
                 </div>
+	</div>
 
 
         {% if category is defined and currentPage == 1 %}
