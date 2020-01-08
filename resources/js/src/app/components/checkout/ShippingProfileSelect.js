@@ -87,7 +87,7 @@ Vue.component("shipping-profile-select", {
         {
             let translationKey = "";
 
-            const params = {};
+            let params = {};
 
             for (let i = 0; i < this.shippingProfileList.length; i++)
             {

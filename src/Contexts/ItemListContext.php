@@ -71,7 +71,7 @@ trait ItemListContext
                 $this->itemCountTotal   = $externalSearch->getCountTotal();
                 $this->facets           = [];
 
-                return;
+                return 0;
             }
         }
 

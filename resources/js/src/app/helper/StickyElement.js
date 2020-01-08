@@ -21,11 +21,9 @@ export class StickyElement
         this.offsetTop = 0;
         this.minWidth = minWidth;
         this.isMinWidth = true;
-        this.checkMinWidth();
-
         this.resizeListener = this.checkMinWidth.bind(this);
-
         window.addEventListener("resize", this.resizeListener);
+        this.checkMinWidth();
 
         this.vm.$nextTick(() =>
         {
@@ -51,13 +49,7 @@ export class StickyElement
             this.animationFrame = 0;
             this.placeholder = document.createElement("DIV");
             this.el.parentNode.insertBefore(this.placeholder, this.el);
-            this.eventListener = () =>
-            {
-                if (this.shouldUpdate())
-                {
-                    this.checkElement();
-                }
-            };
+            this.eventListener = this.tick.bind(this);
 
             document.addEventListener("storeChanged", this.eventListener);
             STICKY_EVENTS.forEach(event =>
@@ -96,10 +88,6 @@ export class StickyElement
             window.removeEventListener(event, this.eventListener);
         });
         this.eventListener = null;
-        if (this.animationFrame > 0)
-        {
-            cancelAnimationFrame(this.animationFrame);
-        }
         this.animationFrame = 0;
         this.enabled = false;
 
@@ -107,16 +95,20 @@ export class StickyElement
 
     tick()
     {
-        if (this.shouldUpdate())
+        if (this.enabled && !this.isMinWidth)
         {
-            this.updateStyles();
-        }
-        this.animationFrame = requestAnimationFrame(this.tick.bind(this));
-    }
+            if (this.animationFrame > 0)
+            {
+                cancelAnimationFrame(this.animationFrame);
+            }
 
-    shouldUpdate()
-    {
-        return (this.enabled && !this.isMinWidth) || (this.position || {}).isSticky;
+            this.animationFrame = requestAnimationFrame(() =>
+            {
+                this.checkElement();
+                this.updateStyles();
+                this.animationFrame = 0;
+            });
+        }
     }
 
     checkElement(skipOffsetCalculation)
@@ -203,8 +195,7 @@ export class StickyElement
             top: null,
             left: null,
             width: null,
-            zIndex: null,
-            transform: null
+            zIndex: null
         };
 
         let placeholderStyles = {
@@ -215,8 +206,7 @@ export class StickyElement
         {
             styles = {
                 position:   "fixed",
-                top:        0,
-                transform:  "translate3d(0, " + this.position.y + "px, 0)",
+                top:        this.position.y + "px",
                 left:       this.position.x + "px",
                 width:      this.position.width + "px"
             };

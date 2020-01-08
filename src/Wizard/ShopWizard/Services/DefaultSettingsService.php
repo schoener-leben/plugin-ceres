@@ -95,7 +95,7 @@ class DefaultSettingsService
         $pluginPaymentMethodsRegistered = [];
         if (count($paymentMethods)) {
             foreach ($paymentMethods as $paymentMethod) {
-                $registeringKey = $paymentMethod->pluginKey . '::' . $paymentMethod->paymentKey;
+                $registeringKey = $paymentMethod->pluginKey . "::" . $paymentMethod->paymentKey;
                 if ($paymentMethodContainer->isRegistered($registeringKey)) {
                     $pluginPaymentMethodsRegistered[$paymentMethod->id] = $paymentMethod->name;
                 }
@@ -122,11 +122,11 @@ class DefaultSettingsService
         $shippingCountries = $this->countryRepository->getActiveCountriesList();
         return count($shippingCountries) ? true : false;
     }
-
+    
     /**
      * @return array
      */
-    public function getShippingProfiles(): array
+    public function getShippingProfiles()
     {
         return $this->parcelServicePresetRepo->getPreviewList();
     }
@@ -134,7 +134,7 @@ class DefaultSettingsService
     /**
      * @return array
      */
-    public function getShippingMethods(): array
+    public function getShippingMethods()
     {
         $shippingMethods = [];
         $shippingProfiles = $this->parcelServicePresetRepo->getPresetList(['*'], 'parcelService');
@@ -143,7 +143,7 @@ class DefaultSettingsService
             foreach ($shippingProfiles as $profile) {
                 $shippingMethod = $profile->parcelService;
                 if($shippingMethod instanceof ParcelService) {
-                    $shippingMethods[(float)$shippingMethod->id] = $shippingMethod->backendName;
+                    $shippingMethods[$shippingMethod->id] = $shippingMethod->backendName;
                 }
             }
         }
@@ -156,7 +156,7 @@ class DefaultSettingsService
      */
     public function hasLocations(): bool
     {
-        $locations = $this->accountingLocationRepo->getAll()->toArray();
+        $locations = $this->accountingLocationRepo->getAll();
         return count($locations) ? true : false;
     }
 
@@ -175,7 +175,7 @@ class DefaultSettingsService
         $pluginSetsData = $pluginSets->toArray();
         $pluginSetList = [];
         if (count($pluginSetsData)) {
-            $plugin = $pluginRepo->getPluginByName('Ceres');
+            $plugin = $pluginRepo->getPluginByName("Ceres");
             if ($plugin instanceof Plugin) {
                 foreach ($pluginSetsData as $pluginSetData) {
                     $pluginSet = $pluginSets->where('id', '=', $pluginSetData['id'])->first();
@@ -198,11 +198,10 @@ class DefaultSettingsService
      */
     public function getWebstores(): array
     {
-        /** @var WebstoreRepositoryContract $webstoreRepo */
         $webstoreRepo = pluginApp(WebstoreRepositoryContract::class);
         $webstores = [];
 
-        $webstoresCollection = $webstoreRepo->loadAll();
+        $webstoresCollection = $webstoreRepo->loadAllPreview();
 
         if (count($webstoresCollection)) {
             foreach ($webstoresCollection as $webstore) {

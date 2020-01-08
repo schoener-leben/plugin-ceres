@@ -2,6 +2,7 @@ import { isNullOrUndefined } from "../../helper/utils";
 import TranslationService from "../../services/TranslationService";
 import Vue from "vue";
 import "owl.carousel";
+import lightbox from "lightbox2";
 import { mapState } from "vuex";
 
 Vue.component("item-image-carousel", {
@@ -36,11 +37,6 @@ Vue.component("item-image-carousel", {
         {
             type: String,
             default: "standard"
-        },
-        pluginPath:
-        {
-            type: String,
-            default: ""
         }
     },
 
@@ -92,10 +88,6 @@ Vue.component("item-image-carousel", {
             },
             deep: true
         }
-    },
-    created()
-    {
-        this.loadLightbox();
     },
 
     mounted()
@@ -172,7 +164,7 @@ Vue.component("item-image-carousel", {
 
             $(this.$refs.single).owlCarousel(carouselSettings);
 
-            if (!isNullOrUndefined(window.lightbox))
+            if (!isNullOrUndefined(lightbox))
             {
                 lightbox.option({
                     wrapAround: true
@@ -280,18 +272,6 @@ Vue.component("item-image-carousel", {
         getItemName()
         {
             return this.$options.filters.itemName(this.currentVariation.documents[0].data);
-        },
-
-        loadLightbox()
-        {
-            const scriptSource = `${ this.pluginPath }/js/dist/lightbox.min.js`;
-            const script = document.createElement("script");
-
-            script.type = "text/javascript";
-            script.src = scriptSource;
-            script.addEventListener("load", () => this.reInitialize(), false);
-            script.addEventListener("error", () => console.warn("lightbox could not be initialized"), false);
-            document.body.appendChild(script);
         }
     }
 });

@@ -13,7 +13,15 @@ class PaginationConfig
         "paginationPositionBottom"    => "bottom",
         "paginationPositionTopBottom" => "top_bottom",
     ];
-
+    
+    private static $rowsPerPage = [
+        "rowsPerPage5"  => "5",
+        "rowsPerPage10" => "10",
+        "rowsPerPage15" => "15",
+        "rowsPerPage20" => "20",
+        "rowsPerPage25" => "25",
+    ];
+    
     private static $itemSortingByRules = [
         "recommendedSorting"     => "default.recommended_sorting",
         "topsellerAsc"           => "variation.position_asc",
@@ -34,7 +42,7 @@ class PaginationConfig
         "manufacturerDesc"       => "item.manufacturer.externalName_desc",
 
     ];
-
+    
     private static $sortingCategory = [
         "sortingPriorityCategoryItemIdAsc"                => "item.id_asc",
         "sortingPriorityCategoryItemIdDesc"               => "item.id_desc",
@@ -62,11 +70,11 @@ class PaginationConfig
         "sortingPriorityCategoryStockDesc"                => "stock.net_desc",
         "sortDataRandom"                                  => "item.random",
     ];
-
+    
     private static $secondSortingCategory = [
         "sortingPriorityCategoryNotSelected" => "notSelected"
     ];
-
+    
     /**
      * @return array
      */
@@ -74,7 +82,15 @@ class PaginationConfig
     {
         return self::$paginationPositions;
     }
-
+    
+    /**
+     * @return array
+     */
+    public static function getRowsPerPage()
+    {
+        return self::$rowsPerPage;
+    }
+    
     /**
      * @return array
      */
@@ -82,7 +98,7 @@ class PaginationConfig
     {
         return self::$itemSortingByRules;
     }
-
+    
     /**
      * @return array
      */
@@ -90,7 +106,7 @@ class PaginationConfig
     {
         return self::$sortingCategory;
     }
-
+    
     /**
      * @return array
      */

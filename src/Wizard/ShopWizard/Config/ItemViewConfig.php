@@ -31,6 +31,13 @@ class ItemViewConfig
         "loadingAnimationSpinner" => "spinner"
     ];
 
+    private static $itemVariationTypes = [
+        "itemVariationTypeAll"      => "all",
+        "itemVariationTypeMain"     => "main",
+        "itemVariationTypeChild"    => "child",
+        "itemVariationTypeCombined" => "combined",
+    ];
+
     private static $categoryDescriptionPositions = [
         "categoryDescriptionNone" => "none",
         "categoryDescription1"    => "description1",
@@ -87,6 +94,14 @@ class ItemViewConfig
     public static function getLoadingAnimationTypes()
     {
         return self::$loadingAnimationTypes;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getItemVariationTypes()
+    {
+        return self::$itemVariationTypes;
     }
 
     /**

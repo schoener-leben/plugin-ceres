@@ -32,7 +32,6 @@ class OnlineStoreStep extends Step
                 $this->buildStoreEmailSettings(),
                 $this->buildStoreOrderSettings(),
                 $this->buildStoreShippingSettings(),
-                $this->buildGoogleMapsSettings(),
                 $this->buildGoogleRecaptchaSettings(),
                 $this->buildSessionLifeTimeSection(),
                 $this->buildStoreCallistoSettings(),
@@ -234,24 +233,6 @@ class OnlineStoreStep extends Step
         ];
     }
 
-    /**
-     * @return array
-     */
-    private function buildGoogleMapsSettings():array
-    {
-        return [
-            "title" => "Wizard.settingsGoogleMaps",
-            "description" => "Wizard.settingsGoogleMapsDescription",
-            "form" => [
-                "onlineStore_googleMapsApiKey" => [
-                    "type" => "text",
-                    "options" => [
-                        "name" => "Wizard.googleMapsApiKey"
-                    ]
-                ]
-            ]
-        ];
-    }
 
     /**
      * @return array
@@ -312,6 +293,7 @@ class OnlineStoreStep extends Step
             ]
         ];
     }
+
 
     /**
      * @return array

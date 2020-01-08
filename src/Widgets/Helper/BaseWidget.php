@@ -2,12 +2,11 @@
 
 namespace Ceres\Widgets\Helper;
 
-use Plenty\Modules\ShopBuilder\Contracts\DynamicWidget;
-use Plenty\Plugin\Application;
+use Plenty\Modules\ShopBuilder\Contracts\Widget;
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Plugin\Log\Loggable;
 
-class BaseWidget implements DynamicWidget
+class BaseWidget implements Widget
 {
     use Loggable;
 
@@ -36,29 +35,9 @@ class BaseWidget implements DynamicWidget
      */
     protected $twig = null;
 
-    /** @var Application $app  */
-    protected $app = null;
-
-    public function __construct(Twig $twig, Application $app)
+    public function __construct(Twig $twig)
     {
         $this->twig = $twig;
-        $this->app = $app;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getData()
-    {
-        return [];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getSettings()
-    {
-        return [];
     }
 
     /**
@@ -136,7 +115,6 @@ class BaseWidget implements DynamicWidget
         ];
         $templateData["children"]  = $children;
         $templateData["isPreview"] = $isPreview;
-        $templateData["isSafeMode"] = $this->app->isTemplateSafeMode();
         $templateData["TOOLBAR_LAYOUT"] = self::TOOLBAR_LAYOUT;
 
         try

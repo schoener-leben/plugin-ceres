@@ -27,9 +27,15 @@ class PaginationMapping
             "global"   => false,
             "optional" => true,
         ],
-        "paginationStep_itemsPerPage" => [
-            "field"    => "pagination.itemsPerPage",
+        "paginationStep_columnsPerPage" => [
+            "field"    => "pagination.columnsPerPage",
             "type"     => "string",
+            "global"   => false,
+            "optional" => true,
+        ],
+        "paginationStep_rowsPerPage" => [
+            "field"    => "pagination.rowsPerPage",
+            "type"     => "concatenated",
             "global"   => false,
             "optional" => true,
         ],
@@ -64,7 +70,7 @@ class PaginationMapping
             "optional" => true,
         ],
     ];
-
+    
     /**
      * @return array
      */

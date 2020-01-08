@@ -54,29 +54,20 @@
             border-color: $value !important;
         }
 
-        .add-to-basket-lg-container:hover {
-            border-color: transparent $value transparent transparent !important;
-        }
-
-        .pagination 
+        .pagination .page-item
         {
-            flex-wrap: wrap;
-
-            .page-item
+            .page-link
             {
-                .page-link
-                {
-                    color: $value;
-                    @include hover-focus {
-                        color: darken($value, 15%);
-                    }
+                color: $value;
+                @include hover-focus {
+                    color: darken($value, 15%);
                 }
-    
-                &.active .page-link
-                {
-                    border-color: $value;
-                    @include context-bg($value);
-                }
+            }
+
+            &.active .page-link
+            {
+                border-color: $value;
+                @include context-bg($value);
             }
         }
 

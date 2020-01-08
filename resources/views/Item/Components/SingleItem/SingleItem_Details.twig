@@ -8,8 +8,6 @@
     </span>
 </h1>
 
-<tag-list></tag-list>
-
 {% if ('item.shortDescription' in itemData or 'all' in itemData)%}
     <p class="single-description" v-if="currentVariation.texts.shortDescription !== ''" v-html="currentVariation.texts.shortDescription"></p>
 {% endif %}
@@ -51,10 +49,7 @@
 {% endif %}
 
 <span class="price h1">
-    <span v-if="addPleaseSelectOption && $store.state.variationSelect.isVariationSelected === false && ($store.state.item.pleaseSelectVariationId == currentVariation.variation.id || $store.state.item.pleaseSelectVariationId == 0)" :content="currentVariation.prices.default.price.value">
-        {{ trans("Ceres::Template.dynamicVariationPrice", {price: "${ variationTotalPrice | currency(currentVariation.prices.default.currency) }"}) }}
-    </span>
-    <span v-else :content="currentVariation.prices.default.price.value">
+    <span :content="currentVariation.prices.default.price.value">
         ${ variationTotalPrice | currency(currentVariation.prices.default.currency) }
     </span>
     <sup>*</sup>
@@ -82,6 +77,7 @@
         ${ currentVariation.variation.availability.names.name }
     </span>
 </span>
+
 <div class="my-3">
     <div class="w-100">
         <slot name="before-add-to-basket"></slot>

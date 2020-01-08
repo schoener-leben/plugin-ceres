@@ -95,7 +95,5 @@
     "variationProperties.property.display",
     "variationProperties.property.groups",
     "variationProperties.property.names.*",
-    "variationProperties.property.position",
-    "tags.id",
-    "tags.names.*"
+    "variationProperties.property.position"
 ]

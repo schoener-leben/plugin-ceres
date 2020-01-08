@@ -27,6 +27,12 @@ class DisplayInfoMapping
             "global"   => false,
             "optional" => true,
         ],
+        "displayInfo_variationType" => [
+            "field"    => "item.variation_show_type",
+            "type"     => "string",
+            "global"   => false,
+            "optional" => true,
+        ],
         "displayInfo_showCategoryImage" => [
             "field"    => "item.show_category_image",
             "type"     => "boolean",
@@ -69,18 +75,6 @@ class DisplayInfoMapping
             "global"   => false,
             "optional" => true,
         ],
-        "displayInfo_showPleaseSelect" => [
-            "field"    => "item.show_please_select",
-            "type"     => "boolean",
-            "global"   => false,
-            "optional" => true,
-        ],
-        "displayInfo_attributeSelectDefaultOption" => [
-            "field"    => "attributeSelectDefaultOption",
-            "type"     => "boolean",
-            "global"   => true,
-            "optional" => true,
-        ],
         "displayInfo_cartItemData" => [
             "field"    => "basket.item_data",
             "type"     => "concatenated",
@@ -106,7 +100,7 @@ class DisplayInfoMapping
             "optional" => true,
         ],
     ];
-
+    
     /**
      * @return array
      */

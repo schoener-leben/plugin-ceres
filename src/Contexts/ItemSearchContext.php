@@ -8,7 +8,7 @@ use IO\Services\ItemSearch\SearchPresets\Facets;
 use IO\Services\ItemSearch\SearchPresets\SearchItems;
 use IO\Services\ItemSearch\Services\ItemSearchService;
 
-class ItemSearchContext extends CategoryContext implements ContextInterface
+class ItemSearchContext extends GlobalContext implements ContextInterface
 {
     use ItemListContext;
 

@@ -1,10 +1,5 @@
 import Vue from "vue";
 
-/**
- * @deprecated since version 4.5.0
- *
- * This component will be removed with the next major release
- */
 Vue.component("contact-map", {
 
     props: [
@@ -24,8 +19,6 @@ Vue.component("contact-map", {
                 this.addScript("https://maps.googleapis.com/maps/api/js?key=" + this.googleApiKey);
             }
         });
-
-        console.warn("contact-map is a deprecated vue component!");
     },
 
     methods:

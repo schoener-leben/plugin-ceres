@@ -208,9 +208,9 @@ export function encodeParams(params, prefix)
     return prefix + "=" + encodeURIComponent(params);
 }
 
-export function setUrlByItem(itemData, keepVariationId)
+export function setUrlByItem(itemData)
 {
-    const url = vueApp.$options.filters.itemURL(itemData, keepVariationId);
+    const url = vueApp.$options.filters.itemURL(itemData);
     const title = document.getElementsByTagName("title")[0].innerHTML;
 
     window.history.replaceState({}, title, url);
