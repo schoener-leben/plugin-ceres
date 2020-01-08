@@ -52,7 +52,6 @@ class DefaultFooterPreset implements ContentPreset
         $this->createLinkListWidget();
         $this->createLegalInformationWidget();
         $this->createTextWidget();
-        $this->createCookieBar();
 
         return $this->preset->toArray();
     }
@@ -169,12 +168,5 @@ class DefaultFooterPreset implements ContentPreset
         $this->preset->createWidget("Ceres::CodeWidget")
             ->withSetting("appearance", "none")
             ->withSetting("text", $defaultText);
-    }
-
-    private function createCookieBar()
-    {
-        $this->preset->createWidget("Ceres::CookieBarWidget")
-            ->withSetting("customClass", "")
-            ->withSetting("appearance", "primary");
     }
 }

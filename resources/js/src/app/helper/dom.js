@@ -94,19 +94,3 @@ export function applyStyles(el, styles)
         }
     });
 }
-
-export function getStyle(el, styleProp)
-{
-    let value;
-
-    if (window.getComputedStyle)
-    {
-        value = document.defaultView.getComputedStyle(el, null).getPropertyValue(styleProp);
-    }
-    else if (el.currentStyle)
-    {
-        value = el.currentStyle[styleProp];
-    }
-
-    return value;
-}

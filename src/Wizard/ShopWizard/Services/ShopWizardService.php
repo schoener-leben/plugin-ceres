@@ -326,8 +326,6 @@ class ShopWizardService
             $data['setAllRequiredAssistants'] = 'true';
         }
 
-        $data['onlineStore_enableRecaptcha'] = strlen($data['onlineStore_recaptchaApiKey']) || strlen($data['onlineStore_recaptchaSecret']);
-
         return $data;
     }
 

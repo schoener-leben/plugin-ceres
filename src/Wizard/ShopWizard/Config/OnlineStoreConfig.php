@@ -13,15 +13,6 @@ class OnlineStoreConfig
         "storeCategoryTypeContent" => "content",
         "storeCategoryTypeBlog"    => "blog"
     ];
-
-    private static $categoryTreeDepths = [
-        "categoryTreeDepth1" => 1,
-        "categoryTreeDepth2" => 2,
-        "categoryTreeDepth3" => 3,
-        "categoryTreeDepth4" => 4,
-        "categoryTreeDepth5" => 5,
-        "categoryTreeDepth6" => 6
-    ];
     
     private static $toTopButtonPosition = [
         "back2TopRight"  => "right",
@@ -61,11 +52,6 @@ class OnlineStoreConfig
     public static function getCategoryTypes()
     {
         return self::$categoryTypes;
-    }
-
-    public static function getCategoryTreeDepths()
-    {
-        return self::$categoryTreeDepths;
     }
     
     /**

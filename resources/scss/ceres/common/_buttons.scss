@@ -173,20 +173,22 @@ button:focus {
 
 .btn-icon
 {
-	padding: .6rem;
+	padding: .5rem;
+	
 	.fa
 	{
+		width: 14px;
 		text-align: center;
 	}
-
+	
 	&.btn-sm
 	{
-		padding: .4rem;
-	}
-
-	&.btn-lg
-	{
-		padding: .95rem;
+		padding: .2rem;
+		
+		.fa
+		{
+			width: 12px;
+		}
 	}
 
 	&.btn-circle

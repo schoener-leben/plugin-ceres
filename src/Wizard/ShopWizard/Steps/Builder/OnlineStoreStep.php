@@ -81,9 +81,7 @@ class OnlineStoreStep extends Step
     private function buildStoreCategoryTypesStructure():array
     {
         $catTypes      = OnlineStoreConfig::getCategoryTypes();
-        $depths        = OnlineStoreConfig::getCategoryTreeDepths();
         $categoryTypes = StepHelper::generateTranslatedListBoxValues($catTypes);
-        $treeDepths    = StepHelper::generateTranslatedListBoxValues($depths);
 
         return [
             "title" => "Wizard.storeCategoryTypes",
@@ -97,14 +95,6 @@ class OnlineStoreStep extends Step
                         "checkboxValues" => $categoryTypes
                     ]
                 ],
-                "onlineStore_categoryTreeDepth" => [
-                    "type" => "select",
-                    "defaultValue" => 6,
-                    "options" => [
-                        "name" => "Wizard.categoryTreeDepth",
-                        "listBoxValues" => $treeDepths
-                    ]
-                ]
             ]
         ];
     }
@@ -338,13 +328,6 @@ class OnlineStoreStep extends Step
                     "options" => [
                         "name" => "Wizard.sessionLifeTime",
                         "listBoxValues" => $sessionLifetimeOptions
-                    ]
-                ],
-                "onlineStore_blockCookies" => [
-                    "type" => "checkbox",
-                    "defaultValue" => false,
-                    "options" => [
-                        "name" => "Wizard.blockCookies"
                     ]
                 ]
             ]

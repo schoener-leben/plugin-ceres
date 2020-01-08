@@ -56,7 +56,7 @@ PropertyReader.prototype.readFile = function(filename)
         {
             if (readValue)
             {
-                entries[currentKey] = (currentValue || "").trim();
+                entries[currentKey] = currentValue.trim();
                 currentKey = null;
                 currentValue = null;
                 readValue = false;
@@ -177,45 +177,33 @@ PropertyTokenStream.prototype.next = function()
 const reader = new PropertyReader();
 let hasError = false;
 
-function compareProperties(sourcePropertyFile, targetPropertyFile)
+function compareProperties(de, en, filename)
 {
-    const sourceProps = reader.readFile(sourcePropertyFile);
-    const targetProps = reader.readFile(targetPropertyFile);
-
-    targetPropertyFile = targetPropertyFile.substr(path.resolve(__dirname, "../resources/lang/").length + 1);
-    sourcePropertyFile = sourcePropertyFile.substr(path.resolve(__dirname, "../resources/lang/").length + 1);
-
-    Object.keys(sourceProps)
-        .filter(entry => !targetProps.hasOwnProperty(entry))
+    Object.keys(en)
+        .filter(entry => !de.hasOwnProperty(entry))
         .forEach(entry =>
         {
             hasError = true;
-            console.log(`"${entry}" is missing in ${targetPropertyFile}`);
+            console.log(entry + " is missing in resources/lang/de/" + filename)
         });
 
-    Object.keys(targetProps)
-        .filter(entry => !sourceProps.hasOwnProperty(entry))
+    Object.keys(de)
+        .filter(entry => !en.hasOwnProperty(entry))
         .forEach(entry =>
         {
             hasError = true;
-            console.log(`${targetPropertyFile} contains "${entry}" but not ${sourcePropertyFile}`);
+            console.log(entry + " is missing in resources/lang/en/" + filename)
         });
 }
 
-const languages = glob.sync(path.resolve(__dirname, "../resources/lang/*"))
-    .map(dir => dir.split("/").pop())
-    .filter(lang => lang !== "de");
-
-
 glob.sync(path.resolve(__dirname, "../resources/lang/de/*.properties"))
-    .forEach(sourcePropertyFile =>
+    .forEach(germanPropertyFile =>
     {
-        languages.forEach((lang) =>
-        {
-            const targetPropertyFile = path.resolve(__dirname, "../resources/lang/", lang, path.basename(sourcePropertyFile));
+        const englishPropertyFile = path.resolve(__dirname, "../resources/lang/en/", path.basename(germanPropertyFile));
+        const germanProperties = reader.readFile(germanPropertyFile);
+        const englishProperties = reader.readFile(englishPropertyFile);
 
-            compareProperties(sourcePropertyFile, targetPropertyFile);
-        });
+        compareProperties(germanProperties, englishProperties, path.basename(germanPropertyFile));
     });
 
 if (hasError)

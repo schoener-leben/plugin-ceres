@@ -112,14 +112,13 @@ const MonetaryFormatter = (function()
 
         const formatDecimals = (value, numberOfDecimals) =>
         {
-            // FIX: add smallest number next to 0 to value to avoid float conversion errors, eg 0.005 => 0.004999999.
-            let result =  Math.round((value + (1/Number.MAX_SAFE_INTEGER)) * Math.pow(10, numberOfDecimals))
+            let result =  Math.round(value * Math.pow(10, numberOfDecimals))
                 .toFixed(0)
                 .substr(-1 * numberOfDecimals, numberOfDecimals);
 
             while (result.length < numberOfDecimals)
             {
-                result = "0" + result;
+                result = result + "0";
             }
 
             return result;

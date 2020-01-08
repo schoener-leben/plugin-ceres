@@ -21,9 +21,7 @@ export const exceptionMap = new Map(
         ["115", "errorCreateOrderRetryTimeNotReached"],
         ["301", "notificationRemoveCouponMinimumOrderValueIsNotReached"],
         ["302", "couponNoMatchingItemInBasket"],
-        ["401", "notificationsCalculateShippingFailed"],
-        ["501", "couponPromotionRequired"]
-
+        ["401", "notificationsCalculateShippingFailed"]
     ]
 );
 

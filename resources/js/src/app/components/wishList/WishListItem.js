@@ -16,7 +16,7 @@ export default {
         imageAccessor:
         {
             type: String,
-            default: "urlPreview"
+            default: "urlMiddle"
         },
         itemDetailsData:
         {

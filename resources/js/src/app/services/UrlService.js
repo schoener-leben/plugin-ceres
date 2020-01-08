@@ -168,7 +168,12 @@ export function navigateTo(url)
 
 export function navigateToParams(urlParams)
 {
-    const url = normalizeUrl(window.location.pathname + "?" + encodeParams(urlParams));
+    const pathName =
+        isDefined(store.state.navigation.currentCategory) &&
+        isDefined(store.state.navigation.currentCategory.url) ?
+            store.state.navigation.currentCategory.url :
+            window.location.pathname;
+    const url = normalizeUrl(pathName + "?" + encodeParams(urlParams));
 
     window.location.assign(url);
 }

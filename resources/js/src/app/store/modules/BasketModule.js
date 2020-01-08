@@ -33,33 +33,6 @@ const mutations =
             state.items = basketItems;
         },
 
-        updateBasketItems(state, basketItems)
-        {
-            if (basketItems)
-            {
-                const newItems = [];
-
-                for (const item of basketItems)
-                {
-                    const oldBasketItem = null;
-
-                    if (isNullOrUndefined(item.variation))
-                    {
-                        oldBasketItem = state.items.find(i => i.id === item.id);
-                        item.variation = oldBasketItem.variation;
-                    }
-                    if (isNullOrUndefined(item.basketItemOrderParams))
-                    {
-                        oldBasketItem = oldBasketItem || state.items.find(i => i.id === item.id);
-                        item.basketItemOrderParams = oldBasketItem.basketItemOrderParams;
-                    }
-                    newItems.push(item);
-                }
-
-                state.items = newItems;
-            }
-        },
-
         addBasketItem(state, basketItems)
         {
             for (let i = 0; i < basketItems.length; i++)
@@ -172,7 +145,7 @@ const actions =
             {
                 commit("setBasket", data.basket);
                 commit("setShowNetPrices", data.showNetPrices);
-                commit("updateBasketItems", data.basketItems);
+                // commit("setBasketItems", data.basketItems);
                 commit("setWishListIds", data.basket.itemWishListIds);
             });
 
