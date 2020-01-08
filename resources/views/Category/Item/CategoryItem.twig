@@ -123,7 +123,21 @@
             </div>
 
 
-            {% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}
+            
+
+            {% if ceresConfig.pagination.position in ['top', 'top_bottom'] %}
+                <div class="list-controls mb-5 row">
+                    <div class="col-12">
+                        <div class="float-right row">
+                            {% include "Ceres::Category.Item.Partials.Pagination" %}
+                        </div>
+                    </div>
+
+                </div>
+            {% endif %}
+
+	<div class="row">
+			{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}
                 <div class="col-3 hidden-md-down">
 				<div class="short-description">
 				{{ category.details[0].shortDescription | raw }}
@@ -141,46 +155,12 @@
                     {{ LayoutContainer.show("Ceres::CategoryItem.SideNavBarBottom") }}
 					   </div>
             {% endif %}
-
-            {% if ceresConfig.pagination.position in ['top', 'top_bottom'] %}
-                <div class="list-controls mb-5 row">
-                    <div class="col-12">
-                        <div class="float-right row">
-                            {% include "Ceres::Category.Item.Partials.Pagination" %}
-                        </div>
-                    </div>
-
-                </div>
-            {% endif %}
+	</div>
 
 
-            <div class="col-12 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}9{% else %}12{% endif %}">
-
-                {% if itemList is not empty %}
-	                <ul class="product-list row grid">
-	                    {% for item in itemList %}
-	                        <li class="col-12 col-sm-6 col-md-4 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}3{% else %}3{% endif %}">
-	                            <category-item
-	                                item-data-ref="{{ item.data | json_data }}"
-	                                :decimal-count="{{ ceresConfig.item.storeSpecial }}">
-	                                <template #before-prices>{{ LayoutContainer.show("Ceres::CategoryItem.BeforePrices", item.data) }}</template>
-	                                <template #after-prices>{{ LayoutContainer.show("Ceres::CategoryItem.AfterPrices", item.data) }}</template>
-
-	                                <a href="{{ item.data | itemURL }}" class="small">
-	                                    <i class="fa fa-image"></i>
-	                                    <span>{{ item.data | itemName }}</span>
-	                                </a>
-	                            </category-item>
-	                        </li>
-	                    {% endfor %}
-	                </ul>
-                {% endif %}
 
 
-                {% if category is not defined and itemList is empty %}
-                    <p class="h3 text-muted mb-5 text-center">{{ trans("Ceres::Template.itemSearchNoResults", {"searchString": searchString}) }}</p>
 
-                {% endif %}
 
                 <div class="col-12 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}9{% else %}12{% endif %}">
                     {% if itemList is not empty %}
@@ -207,7 +187,6 @@
                         <p class="h3 text-muted mb-5 text-center">{{ trans("Ceres::Template.itemSearchNoResults", {"searchString": searchString}) }}</p>
                     {% endif %}
                 </div>
-            </div>
 
 
         {% if category is defined and currentPage == 1 %}
@@ -220,7 +199,6 @@
                 {% endif %}
             </div>
         {% endif %}
-    </div>
 
             {% if ceresConfig.pagination.position in ['bottom', 'top_bottom'] %}
                 <div class="list-controls mb-5 row">
