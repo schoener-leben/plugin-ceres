@@ -45,19 +45,33 @@
                 </div>
             {% endif %}
 
-            {% if category is defined and not ceresConfig.item.showCategoryImage %}
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <h1 class="h2 category-title">{{ category.details[0].name }}</h1>
-                        {% if ceresConfig.item.showCategoryDescriptionTop in ["description1", "both"] and category.details[0].description | trim is not empty %}
-                            <div class="category-description mb-3">{{ category.details[0].description | raw }}</div>
-                        {% endif %}
-                        {% if ceresConfig.item.showCategoryDescriptionTop in ["description2", "both"] and category.details[0].description2 | trim is not empty %}
-                            <div class="category-description mb-3">{{ category.details[0].description2 | raw }}</div>
-                        {% endif %}
-                    </div>
+        {% if category is defined and not ceresConfig.item.showCategoryImage and currentPage == 1 %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h1 class="h2 category-title">{{ category.details[0].name }}</h1>
+                    {% if ceresConfig.item.showCategoryDescriptionTop in ["description1", "both"] and category.details[0].description | trim is not empty %}
+                      <div class="category-description mb-3">
+						<div class="descfull">
+						{{ category.details[0].description | raw }}
+						</div>
+						<div class="desc50">
+						</div>
+						<span class="moreText"></span>
+						</div>
+                    {% endif %}
+                    {% if ceresConfig.item.showCategoryDescriptionTop in ["description2", "both"] and category.details[0].description2 | trim is not empty %}
+                        <div class="category-description mb-3">
+						<div class="descfull">
+						{{ category.details[0].description2 | raw }}
+						</div>
+						<div class="desc50">
+						</div>
+						<span class="moreText"> </span>
+						</div>
+                    {% endif %}
                 </div>
-            {% endif %}
+            </div>
+        {% endif %}
 
             <div class="list-controls mb-5">
                 <div class="list-controls-inner p-2">
