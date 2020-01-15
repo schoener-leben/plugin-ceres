@@ -135,7 +135,7 @@
                     {% if itemList is not empty %}
                         <ul class="product-list row grid">
                             {% for item in itemList %}
-                                <li class="col-12 col-sm-6 col-md-4 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}4{% else %}3{% endif %}">
+                                <li class="col-12 col-sm-6 col-md-4 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}3{% else %}3{% endif %}">
                                     <category-item
                                         item-data-ref="{{ item.data | json_data }}"
                                         :decimal-count="{{ ceresConfig.item.storeSpecial }}">
@@ -168,7 +168,7 @@
                 </div>
             {% endif %}
 
-            {% if category is defined %}
+            {% if category is defined and currentPage == 1 %}
                 <div class="col-12">
                     {% if ceresConfig.item.showCategoryDescriptionBottom in ["description1", "both"] and category.details[0].description | trim is not empty %}
                         <div class="category-description mb-3">{{ category.details[0].description | raw }}</div>
