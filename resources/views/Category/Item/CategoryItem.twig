@@ -91,7 +91,7 @@
                                         {% endif %}
                                     </item-filter-list>
                                 {% else %}
-                                    {{ overrideSearchFilters }}
+                                    <div class="filter" id= "filtertop"> </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -123,6 +123,10 @@
 
                         {{ LayoutContainer.show("Ceres::CategoryItem.SideNavBarBottom") }}
                     </div>
+					<div class="filter" id= "filterside">
+
+                {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
+                </div>		
 
                 {% endif %}
 
