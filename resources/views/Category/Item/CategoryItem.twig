@@ -120,13 +120,14 @@
                             <div class="category-title">{{ trans("Ceres::Template.itemCategories") }}</div>
                             {{ include('Ceres::PageDesign.Partials.Header.SideNavigation.twig') }}
                         </div>
+						<div class="filter" id= "filterside">
+
+                {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
+                </div>
 
                         {{ LayoutContainer.show("Ceres::CategoryItem.SideNavBarBottom") }}
                     </div>
-					<div class="filter" id= "filterside">
-
-                {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
-                </div>		
+							
 
                 {% endif %}
 
