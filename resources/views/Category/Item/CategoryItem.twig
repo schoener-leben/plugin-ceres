@@ -121,8 +121,12 @@
                             {{ include('Ceres::PageDesign.Partials.Header.SideNavigation.twig') }}
                         </div>
 						<div class="filter" id= "filterside">
+						{% if overrideSearchFilters | trim is empty %}
 
-								{{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
+								<span>Filter leer!/span>
+						{% else %}
+                                    {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
+                        {% endif %}
 						</div>
 						<span>Test</span>
 
