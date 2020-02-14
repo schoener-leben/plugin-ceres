@@ -14,7 +14,8 @@ import Vuex from "vuex";
 window.Vue = Vue;
 window.Vuex = Vuex;
 
-Vue.use(require("vue-script2"));
+import script2 from "./plugins/script2";
+Vue.use(script2);
 
 import jQuery from "jquery";
 window.jQuery = jQuery;
@@ -33,12 +34,15 @@ import "./components/basket/BasketTotals";
 import "./components/basket/Coupon";
 import "./components/basket/list/BasketList";
 
+import "./components/category/StepByStepNavigation";
+
 // TODO: Move to list component
 import "./components/basket/list/BasketListItem";
 
 import "./components/checkout/AcceptGtcCheck";
 import "./components/checkout/Checkout";
 import "./components/checkout/ContactWishInput";
+import "./components/checkout/CustomerSignInput";
 import "./components/checkout/PaymentProviderSelect";
 import "./components/checkout/PlaceOrder";
 import "./components/checkout/ShippingPrivacyHintCheck";
@@ -46,6 +50,7 @@ import "./components/checkout/ShippingProfileSelect";
 import "./components/checkout/SubscribeNewsletterCheck";
 
 import "./components/common/GoogleMaps";
+import "./components/common/LazyImg";
 import "./components/common/TabItem";
 import "./components/common/TabList";
 
@@ -80,6 +85,7 @@ import "./components/item/ItemBundle";
 import "./components/item/ItemDataTable";
 import "./components/item/ItemImageCarousel";
 import "./components/item/OrderProperties";
+import "./components/item/TagList";
 
 // TODO: Move to parent component
 import "./components/item/OrderPropertyList";
@@ -93,7 +99,6 @@ import "./components/item/VariationSelect";
 
 import "./components/itemList/CategoryImageCarousel";
 import "./components/itemList/CategoryItem";
-import "./components/itemList/ItemLazyImg";
 import "./components/itemList/ItemSearch";
 import "./components/itemList/ItemStoreSpecial";
 import "./components/itemList/filter/ItemFilter";
@@ -165,8 +170,8 @@ import "./directives/helper/waitingAnimationInfinite";
 
 import "./directives/navigation/navigationTouchHandler";
 import "./directives/navigation/openMobileNavigation";
+import "./directives/navigation/sidenavigationChildrenLoader";
 
-import "./directives/pageDesign/ieObjectfitPolyfill";
 import "./directives/pageDesign/scrollToTop";
 import "./directives/pageDesign/stickInParent";
 import "./directives/pageDesign/tooltip";

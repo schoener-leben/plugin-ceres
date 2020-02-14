@@ -3,7 +3,7 @@ import TranslationService from "../../services/TranslationService";
 import { navigateTo } from "../../services/UrlService";
 import Vue from "vue";
 import { executeReCaptcha } from "../../helper/executeReCaptcha";
-import { isNullOrUndefined } from "../../helper/utils";
+import { isNullOrUndefined, isDefined } from "../../helper/utils";
 import { ButtonSizePropertyMixin } from "../../mixins/buttonSizeProperty.mixin";
 
 const ApiService          = require("../../services/ApiService");
@@ -11,8 +11,6 @@ const NotificationService = require("../../services/NotificationService");
 const ModalService        = require("../../services/ModalService");
 
 Vue.component("registration", {
-
-    delimiters: ["${", "}"],
 
     mixins: [ButtonSizePropertyMixin],
 
@@ -40,8 +38,21 @@ Vue.component("registration", {
             isDisabled: false,
             privacyPolicyAccepted : false,
             privacyPolicyShowError: false,
-            enableConfirmingPrivacyPolicy: App.config.global.registrationRequirePrivacyPolicyConfirmation
+            enableConfirmingPrivacyPolicy: App.config.global.registrationRequirePrivacyPolicyConfirmation,
+            modalShown: false,
+            honeypot: ""
         };
+    },
+
+    mounted()
+    {
+        this.$nextTick(() =>
+        {
+            if (this.modalElement)
+            {
+                this.initModalEventListeners();
+            }
+        });
     },
 
     methods: {
@@ -161,8 +172,10 @@ Vue.component("registration", {
 
                     this.isDisabled = false;
                 })
-                .fail(() =>
+                .fail((error) =>
                 {
+                    NotificationService.error(error.error).closeAfter(10000);
+
                     this.isDisabled = false;
                 });
         },
@@ -175,7 +188,7 @@ Vue.component("registration", {
 
         /**
          * Handle the user object which is send to the server
-         * @returns {{contact: {referrerId: number, typeId: number, options: {typeId: {typeId: number, subTypeId: number, value: *, priority: number}}}}|{contact: {referrerId: number, typeId: number, password: *, options: {typeId: {typeId: number, subTypeId: number, value: *, priority: number}}}}}
+         * @returns {{contact: {referrerId: number, typeId: number, options: {typeId: {typeId: number, subTypeId: number, value: *, priority: number}}}, honeypot: string}|{contact: {referrerId: number, typeId: number, password: *, options: {typeId: {typeId: number, subTypeId: number, value: *, priority: number}}}, honeypot: string}}
          */
         getUserObject()
         {
@@ -192,7 +205,8 @@ Vue.component("registration", {
                                 priority : 0
                             }
                         }
-                    }
+                    },
+                    honeypot: this.honeypot
                 };
 
             if (!this.guestMode)
@@ -215,6 +229,26 @@ Vue.component("registration", {
             if (value)
             {
                 this.privacyPolicyShowError = false;
+            }
+        },
+
+        initModalEventListeners()
+        {
+            const modal = ModalService.findModal(document.getElementById(this.modalElement));
+
+            if (isDefined(modal))
+            {
+                modal.on("show.bs.modal",
+                    () =>
+                    {
+                        this.modalShown = true;
+                    });
+
+                modal.on("hide.bs.modal",
+                    () =>
+                    {
+                        this.modalShown = false;
+                    });
             }
         }
     }
