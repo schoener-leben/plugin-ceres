@@ -1,6 +1,5 @@
 import Vue from "vue";
 import "owl.carousel";
-import "jquery-lazyload";
 
 Vue.component("category-image-carousel", {
 
@@ -138,21 +137,11 @@ Vue.component("category-image-carousel", {
             return altText;
         },
 
-        loadFirstImage()
+        getImageName(image)
         {
-            const itemLazyImage = this.$refs.itemLazyImage;
+            const altText = image && image.name ? image.name : this.titleText;
 
-            if (itemLazyImage)
-            {
-                if (itemLazyImage.loadImage)
-                {
-                    itemLazyImage.loadImage();
-                }
-                else if (itemLazyImage[0] && itemLazyImage[0].loadImage)
-                {
-                    itemLazyImage[0].loadImage();
-                }
-            }
+            return altText;
         }
     }
 });
