@@ -78,13 +78,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="list-wrapper">
-								<div class="filter" id= "filtertop"> </div>
+								<div class="filter" id= "filtertop"> </div>				   
                                 {% include "Ceres::Category.Item.Partials.ItemSorting" with { 'sortingData': searchOptions.sorting, 'selectedSorting': itemSorting } %}
 
                                 {% include "Ceres::Category.Item.Partials.ItemsPerPage" with { 'itemsPerPage': searchOptions.itemsPerPage, 'selectedValue': itemsPerPage } %}
 
                                 {% if overrideSearchFilters | trim is empty %}
-
+                                   
                                 {% else %}
                                     
                                 {% endif %}
@@ -116,14 +116,15 @@
                             {{ include('Ceres::PageDesign.Partials.Header.SideNavigation.twig') }}
                         </div>
 						<div class="filter" id= "filterside">
+						{% if overrideSearchFilters | trim is empty %}
 
-							                <item-filter-list :facet-data="{{ facets | json_encode }}">
-                                    {% if facets | length > 0 %}
-                                        <a class="btn btn-link filter-toggle" href="#filterCollapse">
-                                            <i class="fa fa-sliders default-float" aria-hidden="true"></i> {{ trans("Ceres::Template.itemFilter") }}
-                                        </a>
-                                    {% endif %}
-                                </item-filter-list>
+								<span>Filter leer! </span>
+						{% else %}
+                                    {{ LayoutContainer.show("Ceres::Search.Filter", facets ) }}
+																																					
+											
+                        {% endif %}
+												   
 						</div>
 						
 
@@ -137,7 +138,7 @@
                     {% if itemList is not empty %}
                         <ul class="product-list row grid">
                             {% for item in itemList %}
-                                <li class="col-12 col-sm-6 col-md-4 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}4{% else %}3{% endif %}">
+                                <li class="col-12 col-sm-6 col-md-4 col-lg-{% if category is defined and ceresConfig.header.showNavBars in ["side", "both"] %}3{% else %}3{% endif %}">
                                     <category-item
                                         item-data-ref="{{ item.data | json_data }}"
                                         :decimal-count="{{ ceresConfig.item.storeSpecial }}">
