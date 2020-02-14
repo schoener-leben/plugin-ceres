@@ -213,6 +213,10 @@
                 visibility: visible;
             }
         }
+
+        .form-check {
+            padding-left: 1.35rem;
+        }
     }
     
     .order-property-slider-controls {
@@ -255,6 +259,11 @@
                 }
             }
         }
+    }
+
+    .form-check input:checked + label
+    {
+        @extend .text-success;
     }
 }
 
