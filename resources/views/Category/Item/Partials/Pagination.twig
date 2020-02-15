@@ -88,9 +88,8 @@
             {% if currentPage + 2 <= pageMax %}
                 <li class="page-item">
                     <a class="page-link" href="{{ baseURL ~ queryString({ 'page': pageMax }) }}">{{ '... ' ~ pageMax }}</a>
-
                 </li>
-            {% endfor %} 
+            {% endif %} 
             <!-- ./PAGINATION -->
 
             <!-- NEXT LINK -->
