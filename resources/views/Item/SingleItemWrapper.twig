@@ -5,19 +5,25 @@
 {% block PartialHead %}
 
     {% set itemData = item.documents[0].data %}
+
+    {% if queryString() | length > 0 %}
+        {% set robotsValue = 'NOINDEX' %}
+    {% else %}
+        {% set robotsValue = 'ALL' %}
+    {% endif %}
     {% embed getPartial('page-metadata') %}
         {% block title          ItemName.get(itemData | itemName, itemData.variation.bundleType) %}
         {% block description    itemData.texts.metaDescription %}
         {% block keywords       itemData.texts.keywords %}
         {% block image          itemData.images.all[0].url %}
-        {% block robots         "ALL" %}
+        {% block robots         robotsValue %}
         {% block schemaOrg %}
             {
                 "@context"      : "http://schema.org/",
                 "@type"         : "Product",
                 "@id"           : "{{ itemData.variation.id }}",
                 "name"          : "{{ ItemName.get(itemData | itemName, itemData.variation.bundleType) | trim }}",
-                "category"      : "{{ defaultCategory.details[0].name | raw  }}",
+                "category"      : "{{ defaultCategory.details[0].name }}",
                 "releaseDate"   : "{{ itemData.variation.releasedAt }}",
                 "image"         : "{{ itemData.images.all[0].urlPreview }}",
                 "identifier"    : "{{ itemData.variation.id }}",
@@ -34,12 +40,12 @@
                     {% if itemData.prices.default.baseLot > 0 %}
                     "priceSpecification": {
                         "@type": "UnitPriceSpecification",
-                        "price": "{{ item.documents[0].data.prices.default.baseSinglePrice | number_format(2, '.', '') }}",
+                        "price": "{{ itemData.prices.default.price.value | number_format(2, '.', '') }}",
                         "priceCurrency": "{{ item.documents[0].data.prices.default.currency }}",
                         "referenceQuantity": {
                             "@type": "QuantitativeValue",
-                            "value": "{{ item.documents[0].data.prices.default.baseLot }}",
-                            "unitCode": "{{ item.documents[0].data.prices.default.baseUnit }}"
+                            "value": "{{ itemData.unit.content }}",
+                            "unitCode": "{{ itemData.unit.unitOfMeasurement }}"
                         }
                     },
                     {% endif %}

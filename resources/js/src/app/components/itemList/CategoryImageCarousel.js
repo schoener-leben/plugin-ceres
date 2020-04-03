@@ -114,10 +114,13 @@ Vue.component("category-image-carousel", {
                 ],
                 onTranslated(event)
                 {
-                    const target = $(event.currentTarget);
-                    const owlItem = $(target.find(".owl-item.active"));
+                    const element = event.target.querySelector(".owl-item.active img");
 
-                    owlItem.find(".img-fluid.lazy").show().lazyload({ threshold : 100 });
+                    if (element && element.dataset.src && !element.src)
+                    {
+                        element.src = element.dataset.src;
+                        element.removeAttribute("data-src");
+                    }
                 },
                 onInitialized: event =>
                 {
@@ -133,6 +136,13 @@ Vue.component("category-image-carousel", {
         getAltText(image)
         {
             const altText = image && image.alternate ? image.alternate : this.altText;
+
+            return altText;
+        },
+
+        getImageName(image)
+        {
+            const altText = image && image.name ? image.name : this.titleText;
 
             return altText;
         }

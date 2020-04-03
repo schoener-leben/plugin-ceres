@@ -72,6 +72,10 @@
   width: 100%;
   object-fit: contain;
   height: 100%;
+
+  &:not([src]) {
+    opacity: 0;
+  }
 }
 
 .owl-carousel .owl-nav.disabled,
@@ -443,21 +447,4 @@ html.ie {
   .single-carousel .owl-item > div {
     text-align: center;
   }
-
-  // prevent wrap
-  #thumb-carousel .owl-stage {
-    display: flex;
-    
-    // thumb-image takes assigned height of parent and displays optimal width
-    .owl-item {
-      width: auto !important;
-
-      img {
-        width: auto;
-        margin-right: 0 !important;
-      }
-    }
-  }
 }
-
-

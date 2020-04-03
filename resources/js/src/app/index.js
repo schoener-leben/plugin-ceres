@@ -14,7 +14,8 @@ import Vuex from "vuex";
 window.Vue = Vue;
 window.Vuex = Vuex;
 
-Vue.use(require("vue-script2"));
+import script2 from "./plugins/script2";
+Vue.use(script2);
 
 import jQuery from "jquery";
 window.jQuery = jQuery;
@@ -33,12 +34,15 @@ import "./components/basket/BasketTotals";
 import "./components/basket/Coupon";
 import "./components/basket/list/BasketList";
 
+import "./components/category/StepByStepNavigation";
+
 // TODO: Move to list component
 import "./components/basket/list/BasketListItem";
 
 import "./components/checkout/AcceptGtcCheck";
 import "./components/checkout/Checkout";
 import "./components/checkout/ContactWishInput";
+import "./components/checkout/CustomerSignInput";
 import "./components/checkout/PaymentProviderSelect";
 import "./components/checkout/PlaceOrder";
 import "./components/checkout/ShippingPrivacyHintCheck";

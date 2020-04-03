@@ -19,6 +19,7 @@ use Ceres\Widgets\Category\PaginationWidget;
 use Ceres\Widgets\Category\ToolbarWidget;
 use Ceres\Widgets\Checkout\CancelPaymentWidget;
 use Ceres\Widgets\Checkout\ContactWishWidget;
+use Ceres\Widgets\Checkout\CustomerSignWidget;
 use Ceres\Widgets\Checkout\GtcCheckWidget;
 use Ceres\Widgets\Checkout\PaymentProviderWidget;
 use Ceres\Widgets\Checkout\PlaceOrderWidget;
@@ -88,6 +89,7 @@ use Ceres\Widgets\MyAccount\LogoutButtonWidget;
 use Ceres\Widgets\MyAccount\OrderHistoryWidget;
 use Ceres\Widgets\MyAccount\OrderReturnHistoryWidget;
 use Ceres\Widgets\Navigation\NavigationTreeWidget;
+use Ceres\Widgets\Navigation\StepByStepNavigationWidget;
 use Ceres\Widgets\OrderConfirmation\OrderDataWidget;
 use Ceres\Widgets\OrderConfirmation\OrderDocumentsWidget;
 use Ceres\Widgets\OrderConfirmation\OrderReturnWidget;
@@ -111,7 +113,8 @@ class WidgetCollection
         PlaceOrderWidget::class,
         ShippingPrivacyCheckWidget::class,
         ShippingProfileWidget::class,
-        SubscribeNewsletterCheckWidget::class
+        SubscribeNewsletterCheckWidget::class,
+        CustomerSignWidget::class
     ];
 
     const COMMON_WIDGETS = [
@@ -224,6 +227,7 @@ class WidgetCollection
         ToolbarWidget::class,
         PaginationWidget::class,
         NavigationTreeWidget::class,
+        StepByStepNavigationWidget::class,
         SelectedFilterWidget::class,
         AttributesPropertiesCharacteristicsFilterWidget::class,
         AvailabilityFilterWidget::class,
