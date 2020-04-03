@@ -11541,7 +11541,9 @@ html.ios {
 }
 
 button:focus {
-	outline:none;
+    outline:none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
 }
 
 // button combinations 
@@ -11679,7 +11681,9 @@ button:focus {
 
 	&.btn-circle
 	{
-		border-radius: 50%;
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
 	}
 }
 
@@ -12013,6 +12017,10 @@ body.lb-disable-scrolling {
   -o-object-fit: contain;
      object-fit: contain;
   height: 100%;
+
+  &:not([src]) {
+    opacity: 0;
+  }
 }
 
 .owl-carousel .owl-nav.disabled,
@@ -13400,6 +13408,11 @@ $border-width: 1px;
     > .input-unit-preview
     {
         height: 38px;
+    }
+
+    > .input-unit-label
+    {
+        padding-right: calc(1rem + 38px);
     }
 
     > .input-unit-btn
@@ -15507,6 +15520,10 @@ html.ie {
             margin-bottom: 0;
             min-height: 115px;
         }
+
+        &:not(.items-empty){
+            cursor: pointer;
+        }
     }
 
     .dropdown-toggle{
@@ -15581,7 +15598,6 @@ html.ie {
         -webkit-box-direction: normal;
             -ms-flex-direction: row;
                 flex-direction: row;
-        cursor: pointer;
         padding: 1em;
         margin-bottom: 0;
 
@@ -17668,6 +17684,12 @@ html.ie .basket-preview-hover {
 	min-height: calc(#{$font-size-base} + #{$pagination-padding-y * 2} + #{$pagination-border-width * 2});
 }
 
+.page-item {
+    &:not(.disabled):not(.active) {
+        cursor: pointer;
+    }
+}
+
 // IE compatibility
 html.ie {
     .cmp-paginator {
@@ -18395,7 +18417,7 @@ html.crios {
 
     .filter-collapse {
         position: absolute;
-        z-index: 1050;
+        z-index: $zIndex-1;
         width: 100%;
         margin-left: -15px;
         padding-right: 15px;
@@ -20118,25 +20140,36 @@ html.ie .v-s-boxes .v-s-box.invalid {
         top: 0;
         bottom: 0;
         height: 100% !important;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .huge-font {
-        font-size: $font-size-base;
-
-        @include media-breakpoint-up(sm) {
-            font-size: 28px;
-        }
-        @include media-breakpoint-up(md) {
-            font-size: 35px;
-        }
-
         .widget-text,
         .widget-code {
+            font-size: $font-size-base;
+
+            @include media-breakpoint-up(sm) {
+                font-size: 28px;
+            }
+            @include media-breakpoint-up(md) {
+                font-size: 35px;
+            }
+
             h1 { font-size: 2em };
             h2 { font-size: 1.8em };
             h3 { font-size: 1.5em };
             h4 { font-size: 1.25em };
             * { font-size: 1em };
+        }
+    }
+}
+
+.widget-grid {
+    .widget-background {
+        .container-max {
+            padding-right: 0 !important;
+            padding-left: 0 !important;
         }
     }
 }
@@ -20859,6 +20892,15 @@ html.ie {
         }
     }
 
+    .widget-fw {
+        width: unset !important;
+        left: unset !important;
+        right: unset !important;
+        margin-left: unset;
+        margin-right: unset;
+        max-width: unset !important;
+    }
+
     .widget-inner-stacked
     {
         display: -webkit-box;
@@ -20977,8 +21019,7 @@ html.ie .widget-grid .widget-inner-stacked {
 {
     margin-bottom: 2rem;
 
-    .widget-inner
-    {
+    .widget-inner {
         position: relative;
 
         .widget
@@ -21077,20 +21118,6 @@ html.ie .widget-grid .widget-inner-stacked {
     &.widget-grid {
         width: calc(100vw + 30px) !important;
         margin-left: -15px;
-    }
-}
-.widget .widget-fw {
-    position: unset;
-    width: unset;
-    left: unset !important;
-    right: unset !important;
-    margin-left: unset;
-    margin-right: unset;
-    max-width: unset !important;
-
-    &.widget-grid {
-        width: unset !important;
-        margin-left: unset;
     }
 }
 
