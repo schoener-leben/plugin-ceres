@@ -6,10 +6,17 @@ Vue.directive("toggle-basket-preview",
         {
             el.addEventListener("click", event =>
             {
-                document.body.classList.toggle("basket-open");
+                const vueApp = document.querySelector("#vue-app");
 
-                event.preventDefault();
-                event.stopPropagation();
+                if (vueApp)
+                {
+                    const basketOpenClass = (App.config.basket.previewType === "right") ? "open-right" : "open-hover";
+
+                    vueApp.classList.toggle(basketOpenClass || "open-hover");
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
             });
         }
     });

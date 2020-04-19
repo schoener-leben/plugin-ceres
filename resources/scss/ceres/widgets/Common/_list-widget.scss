@@ -1,15 +1,18 @@
 .widget-list,
-.widget-link-list {
-    .widget-inner {
+.widget-link-list
+{
+    .widget-inner
+    {
         .list-container,
         .list-centered {
             width: fit-content;
-            margin-right: auto;
             margin-left: auto;
+            margin-right: auto;
             text-align: center;
         }
 
-        ul {
+        ul
+        {
             margin-bottom: 0;
         }
 

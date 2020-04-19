@@ -1,11 +1,7 @@
 let paused  = false;
-
 let timeout = -1;
-
 let interval;
-
 let timeRemaining;
-
 let timeStart;
 
 export function findModal(element)
@@ -18,7 +14,6 @@ export default { findModal };
 function Modal(element)
 {
     const self = this;
-
     let $bsModal;
 
     if ($(element).is(".modal"))

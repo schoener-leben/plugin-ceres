@@ -21,12 +21,7 @@ class TwigItemDataField extends Twig_Extension
      */
     private $twig;
 
-    /**
-     * @var array $itemData
-     * This array acts as a stack (LIFO)
-     * The last element is used for datafield fetches
-     */
-    private $itemData = [];
+    private $itemData = null;
 
     /**
      * TwigStyleScriptTagFilter constructor.
@@ -56,7 +51,6 @@ class TwigItemDataField extends Twig_Extension
     {
         return [
             $this->twig->createSimpleFunction('set_item_data_base', [$this, 'setItemDataBase']),
-            $this->twig->createSimpleFunction('pop_item_data_base', [$this, 'popItemDataBase']),
             $this->twig->createSimpleFunction('item_data_field', [$this, 'getDataField'], ['is_safe' => array('html')]),
             $this->twig->createSimpleFunction(
                 'item_data_field_html',
@@ -81,14 +75,8 @@ class TwigItemDataField extends Twig_Extension
 
     public function setItemDataBase($itemData)
     {
-        $this->itemData[] = $itemData;
-        return '';
-    }
-
-    public function popItemDataBase()
-    {
-        array_pop($this->itemData);
-        return '';
+        $this->itemData = $itemData;
+        return "";
     }
 
     /**
@@ -98,8 +86,7 @@ class TwigItemDataField extends Twig_Extension
      */
     public function getDataField($field, $filter = null, $directiveType = "text", $htmlTagType = "span", $linkType = "")
     {
-        $itemData = $this->itemData[count($this->itemData)-1];
-        $twigPrint = SafeGetter::get($itemData, $field);
+        $twigPrint = SafeGetter::get($this->itemData, $field);
         if (!is_null($filter)) {
             try {
                 /** @var Twig $twigRenderer */

@@ -5,13 +5,10 @@ namespace Ceres\Widgets\Presets;
 use Ceres\Config\CeresConfig;
 use Ceres\Widgets\Helper\Factories\PresetWidgetFactory;
 use Ceres\Widgets\Helper\PresetHelper;
-use Ceres\Widgets\Presets\Helper\HasWhiteBackground;
 use Plenty\Modules\ShopBuilder\Contracts\ContentPreset;
 
 class DefaultMyAccountPreset implements ContentPreset
 {
-    use HasWhiteBackground;
-
     /** @var PresetHelper */
     private $preset;
     
@@ -31,10 +28,12 @@ class DefaultMyAccountPreset implements ContentPreset
     {
         $this->preset = pluginApp(PresetHelper::class);
         $this->ceresConfig = pluginApp(CeresConfig::class);
-
-        $this->createBackground($this->preset);
         
         $this->createHeadline();
+        
+        $this->createTwoColumnWidgetTop();
+        $this->createGreetingWidget();
+        $this->createLogoutButtonWidget();
         
         $this->createTwoColumnWidgetAddresses();
         $this->createAddressWidget('1');
@@ -53,7 +52,7 @@ class DefaultMyAccountPreset implements ContentPreset
     private function createHeadline()
     {
         $text = '<h1 class="h2">{{ trans("Ceres::Template.myAccount") }}</h1>';
-        $this->createWidget('Ceres::TextWidget')
+        $this->preset->createWidget('Ceres::TextWidget')
                      ->withSetting("text", $text)
                      ->withSetting("appearance", "none")
                      ->withSetting("customPadding", true)
@@ -64,12 +63,8 @@ class DefaultMyAccountPreset implements ContentPreset
                      ->withSetting("customMargin", true)
                      ->withSetting("margin.bottom.value", 0)
                      ->withSetting("margin.bottom.unit", null);
-
-        $this->createTwoColumnWidgetTop();
-        $this->createGreetingWidget();
-        $this->createLogoutButtonWidget();
-
-        $this->createWidget('Ceres::SeparatorWidget')
+    
+        $this->preset->createWidget('Ceres::SeparatorWidget')
                      ->withSetting('margin.top', 'auto')
                      ->withSetting('margin.bottom', 'auto');
     }
@@ -123,7 +118,7 @@ class DefaultMyAccountPreset implements ContentPreset
     
     private function createOrderHistoryWidget()
     {
-        $this->createWidget('Ceres::OrderHistoryWidget')
+        $this->preset->createWidget('Ceres::OrderHistoryWidget')
             ->withSetting('appearance', 'primary')
             ->withSetting('ordersPerPage', $this->ceresConfig->myAccount->ordersPerPage)
             ->withSetting('allowPaymentProviderChange', $this->ceresConfig->myAccount->changePayment)
@@ -132,23 +127,23 @@ class DefaultMyAccountPreset implements ContentPreset
     
     private function createOrderReturnHistoryWidget()
     {
-        $this->createWidget('Ceres::OrderReturnHistoryWidget')
+        $this->preset->createWidget('Ceres::OrderReturnHistoryWidget')
             ->withSetting('appearance', 'primary')
             ->withSetting('returnsPerPage', 5);
     }
     
     private function createTwoColumnWidgetTop()
     {
-        $this->twoColumnWidgetTop = $this->createWidget('Ceres::TwoColumnWidget')->withSetting('layout', 'nineToThree');
+        $this->twoColumnWidgetTop = $this->preset->createWidget('Ceres::TwoColumnWidget')->withSetting('layout', 'nineToThree');
     }
     
     private function createTwoColumnWidgetAddresses()
     {
-        $this->twoColumnWidgetAddresses = $this->createWidget('Ceres::TwoColumnWidget')->withSetting('layout', 'oneToOne');
+        $this->twoColumnWidgetAddresses = $this->preset->createWidget('Ceres::TwoColumnWidget')->withSetting('layout', 'oneToOne');
     }
     
     private function createTwoColumnWidgetAccountSettings()
     {
-        $this->twoColumnWidgetAccountSettings = $this->createWidget('Ceres::TwoColumnWidget')->withSetting('layout', 'oneToOne');
+        $this->twoColumnWidgetAccountSettings = $this->preset->createWidget('Ceres::TwoColumnWidget')->withSetting('layout', 'oneToOne');
     }
 }

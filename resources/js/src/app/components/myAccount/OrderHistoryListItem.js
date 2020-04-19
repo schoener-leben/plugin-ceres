@@ -2,7 +2,7 @@ import Vue from "vue";
 import TranslationService from "../../services/TranslationService";
 const ApiService = require("../../services/ApiService");
 
-export default Vue.component("order-history-list-item", {
+Vue.component("order-history-list-item", {
 
     props:
     {

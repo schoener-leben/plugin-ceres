@@ -4,7 +4,7 @@ const NotificationService = require("../../services/NotificationService");
 import Vue from "vue";
 import { mapState } from "vuex";
 
-export default Vue.component("accept-gtc-check", {
+Vue.component("accept-gtc-check", {
 
     props:
     {

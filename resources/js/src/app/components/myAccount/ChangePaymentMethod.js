@@ -4,7 +4,7 @@ const ApiService          = require("../../services/ApiService");
 import TranslationService from "../../services/TranslationService";
 import Vue from "vue";
 
-export default Vue.component("change-payment-method", {
+Vue.component("change-payment-method", {
 
     props:
     {

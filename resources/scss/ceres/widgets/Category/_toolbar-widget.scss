@@ -7,7 +7,7 @@
         .flex-fill {
             > div {
                 @include media-breakpoint-up(sm) {
-                    display: inline-block !important; // stylelint-disable-line declaration-no-important
+                    display: inline-block !important;
                 }
             }
         }
@@ -15,19 +15,19 @@
 
     .filter-collapse {
         > div {
-            padding: 2rem;
             background: $white;
-            border: 1px solid $gray-200;
+            border: 1px solid $gray-lighter2;
+            padding: 2rem;
         }
     }
 
     .collapse-container:empty {
-        &::after {
+        &:after {
+            content: attr(data-translation-empty);
             display: block;
             padding: .75rem;
-            color: $gray-700;
+            color: $gray-dark;
             text-align: center;
-            content: attr(data-translation-empty);
         }
     }
 }

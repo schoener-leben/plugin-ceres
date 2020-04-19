@@ -37,7 +37,7 @@ class PropertyListDataFieldProvider extends DataFieldProvider
             $propertyGroupId = $this->propertyGroupId;
             if(!is_null($propertyGroupId))
             {
-                $this->addField("name_$propertyGroupId", "Ceres::Widget.dataFieldPropertyGroupName", "item_data_field('variationProperties.{id, $propertyGroupId}.name')");
+                $this->addField("name_$propertyGroupId", "Ceres::Widget.dataFieldPropertyGroupName", "item_data_field('variationPropertyGroups.{id, $propertyGroupId}.names.name')");
             }
             
             /** @var Property $property */
@@ -45,10 +45,8 @@ class PropertyListDataFieldProvider extends DataFieldProvider
             {
                 $this->addChildProvider(
                     $property->names->first()->name,
-                    PropertyDataFieldProvider::class, [
-                        'property' => $property,
-                        'propertyGroupId' => $propertyGroupId
-                    ]
+                    PropertyDataFieldProvider::class,
+                    ['property' => $property]
                 );
             }
         }

@@ -4,7 +4,7 @@ import { mapState } from "vuex";
 import { isDefined } from "../../helper/utils";
 const NotificationService = require("../../services/NotificationService");
 
-export default Vue.component("payment-provider-select", {
+Vue.component("payment-provider-select", {
     props:
     {
         template:

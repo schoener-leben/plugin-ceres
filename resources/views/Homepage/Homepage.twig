@@ -2,43 +2,38 @@
 
 {% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
 
+{% set showDefaultHomepage = config("Ceres.default.homepage") %}
+
 {% block PartialHead %}
     {% embed getPartial('page-metadata') %}
-        {% if category is defined and category is not null %}
-            {# Override default behaviour: Use empty title if no explicit meta title is defined #}
-            {% block title          category.details[0].metaTitle | default('') %}
-        {% else %}
-            {% block description    trans('Ceres::Template.homepageMetaDescription') %}
-            {% block robots         ceresConfig.meta.robotsHome %}
-        {% endif %}
+        {% block description    trans('Ceres::Template.homepageMetaDescription') %}
+        {% block robots         ceresConfig.meta.robotsHome %}
     {% endembed %}
 {% endblock %}
 
 {% block PageBody %}
-    {% set shopBuilderTemplate = "" %}
-    {% if category is defined and category is not null %}
-        {# get shopbuilder template for category if defined #}
-        {% set shopBuilderTemplate = shop_builder_category_template(category.id) %}
-    {% endif %}
 
-    {% if shopBuilderTemplate | trim is not empty %}
-        {# show shopbuilder content for homepage category #}
+    {% if ceresConfig.homepage.showShopBuilderContent or request.get('isContentBuilder') == 1 %}
         <div class="container-max">
             <div class="row">
                 <div class="col">
-                    {{ shopBuilderTemplate | raw }}
+                    {% for content in container("Ceres::Homepage") if content.plugin == "Plenty" %}
+                        {{ content.result|raw }}
+                    {% endfor %}
                 </div>
             </div>
         </div>
+
     {% else %}
-        {% set overrideHomepage = LayoutContainer.show("Ceres::Homepage") %}
-        {% if overrideHomepage | trim is not empty %}
-            {# Show contents for container Ceres::Homepage #}
-            {{ overrideHomepage }}
+
+        {% if showDefaultHomepage == "true" %}
+            {% include 'Ceres::Homepage.MarketingHomepage.twig' %}
         {% else %}
-            {# Show default homepage #}
-            {% include "Ceres::Homepage.MarketingHomepage.twig" %}
+            {% block ThemeHomepage %}
+                {% include 'Ceres::Homepage.DefaultHomepage.twig' %}
+            {% endblock %}
         {% endif %}
+
     {% endif %}
 
 {% endblock %}

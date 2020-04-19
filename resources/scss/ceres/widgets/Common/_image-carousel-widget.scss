@@ -1,162 +1,152 @@
-.carousel-control-next,
-.carousel-control-prev {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 15%;
-    color: #fff;
-    text-align: center;
-    opacity: .5;
-}
-
-.carousel-control-prev {
-    left: 0;
-}
-
-.carousel-control-next {
-    right: 0;
-}
-
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background: transparent no-repeat center center;
-    background-size: 100% 100%;
-}
-
-@mixin widget-carousel-variant($parent, $color) {
-    .widget-image-carousel#{$parent} {
+@mixin widget-carousel-variant($parent, $color)
+{
+    .widget-image-carousel#{$parent}
+    {
         .widget-caption h2,
-        .widget-caption .h2 {
-            @include widget-bg-variant(rgba($color, .8));
+        .widget-caption .h2
+        {
+            @include widget-bg-variant( rgba($color, .8) );
         }
 
         &:hover .widget-caption h2,
-        &:hover .widget-caption .h2 {
-            @include widget-bg-variant(rgba($color, .9));
+        &:hover .widget-caption .h2
+        {
+            @include widget-bg-variant( rgba($color, .9) );
         }
 
-        .carousel-indicators li {
+        .carousel-indicators li
+        {
             border-color: $color;
 
-            &.active {
+            &.active
+            {
                 background-color: $color;
             }
         }
 
-        .carousel-control .fa {
+        .carousel-control .fa
+        {
             color: $color;
         }
     }
 }
 
-.widget-image-carousel {
-    .widget-inner {
-        padding-right: 0 !important; // stylelint-disable-line declaration-no-important
-        padding-left: 0 !important; // stylelint-disable-line declaration-no-important
+.widget-image-carousel
+{
+    .widget-inner
+    {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
 
-        .widget-caption {
+        .widget-caption
+        {
             position: absolute;
+            text-align: center;
             bottom: 60px;
             left: 50%;
-            width: 70%;
-            text-align: center;
             transform: translateX(-50%);
+            width: 70%;
 
-            h2,
-            .h2 {
-                display: inline-block;
+            h2, .h2
+            {
                 padding: .5rem 1rem;
-                margin: 0;
                 font-size: 1.75rem;
-                @include transition(.3s all ease);
+                margin: 0;
+                display: inline-block;
+                transition: 300ms all ease;
 
-                @include media-breakpoint-up(md) {
+                @include media-breakpoint-up(md)
+                {
                     font-size: 3rem;
                 }
             }
         }
 
-        .carousel-inner {
+        .carousel-inner
+        {
             display: flex;
             height: 100%;
         }
-
-        .carousel-item {
+        .carousel-item
+        {
             width: 100%;
             height: 100%;
 
-            // stylelint-disable selector-no-qualifying-type
-            img {
+            img
+            {
                 position: absolute;
-                top: 50%;
-                left: 50%;
                 max-width: 100%;
                 max-height: 100%;
+                top: 50%;
+                left: 50%;
                 transform: translate(-50%, -50%);
 
-                &.img-cover {
+                &.img-cover
+                {
                     min-width: 100%;
                     min-height: 100%;
                     object-fit: cover;
                 }
             }
-            // stylelint-enable selector-no-qualifying-type
         }
 
-        .carousel-indicators {
+        .carousel-indicators
+        {
             bottom: 0;
             padding: .5rem 1rem;
 
-            li {
+            li
+            {
                 /* Bootstrap override */
                 box-sizing: border-box;
+                border-radius: .8rem;
                 width: .8rem;
                 height: .8rem;
                 margin: 2px;
-                background-color: transparent;
                 border: 1px solid #fff;
-                @include border-radius(.8rem);
+                background-color: transparent;
             }
         }
 
-        .carousel-control {
+        .carousel-control
+        {
             background-image: none;
-            @include transition(.3s all ease);
+            transition: 300ms all ease;
 
-            .fa {
+            .fa
+            {
                 position: absolute;
-                top: 50%;
                 left: 50%;
-                font-size: 3rem;
+                top: 50%;
                 transform: translate(-50%, -50%);
+                font-size: 3rem;
             }
         }
     }
 }
-
-@include media-breakpoint-up(md) {
-    .widget-inner-stacked .widget-image-carousel {
-        .widget-caption {
-            h2,
-            .h2 {
+@include media-breakpoint-up(md)
+{
+    .widget-inner-stacked .widget-image-carousel
+    {
+        .widget-caption
+        {
+            h2, .h2
+            {
                 padding: .5rem 1rem;
-                margin: 0;
                 font-size: 1.75rem;
+                margin: 0;
 
-                @include media-breakpoint-up(md) {
+                @include media-breakpoint-up(md)
+                {
                     font-size: 3rem;
                 }
             }
         }
 
-        .carousel-control {
-            .fa {
+        .carousel-control
+        {
+            .fa
+            {
                 font-size: 1.5rem;
             }
         }
@@ -164,20 +154,17 @@
 }
 
 /* Compatibility for IE */
-
 /* display img with optimal aspect ratio */
-// stylelint-disable
 html.ie {
     .widget-image-carousel .widget-inner .carousel-item .img-cover {
-        min-width: auto;
         min-height: auto;
+        min-width: auto;
     }
 }
-// stylelint-enable
 
-@include widget-carousel-variant(".widget-primary", $primary);
-@include widget-carousel-variant(".widget-secondary", $secondary);
-@include widget-carousel-variant(".widget-success", $success);
-@include widget-carousel-variant(".widget-info", $info);
-@include widget-carousel-variant(".widget-warning", $warning);
-@include widget-carousel-variant(".widget-danger", $danger);
+@include widget-carousel-variant('.widget-primary', $primary);
+@include widget-carousel-variant('.widget-secondary', $secondary);
+@include widget-carousel-variant('.widget-success', $success);
+@include widget-carousel-variant('.widget-info', $info);
+@include widget-carousel-variant('.widget-warning', $warning);
+@include widget-carousel-variant('.widget-danger', $danger);

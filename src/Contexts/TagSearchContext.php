@@ -4,7 +4,7 @@ namespace Ceres\Contexts;
 
 use Ceres\Helper\SearchOptions;
 use IO\Helper\ContextInterface;
-use Plenty\Modules\Webshop\ItemSearch\SearchPresets\TagItems;
+use IO\Services\ItemSearch\SearchPresets\TagItems;
 
 class TagSearchContext extends CategoryContext implements ContextInterface
 {

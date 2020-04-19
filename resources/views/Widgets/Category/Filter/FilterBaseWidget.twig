@@ -1,6 +1,8 @@
 {% import "Ceres::Widgets.Helper.TwigBuilder" as Twig %}
 {% import "Ceres::Widgets.Helper.WidgetHelper" as WidgetHelper %}
 
+{{ Twig.component( "Ceres::ItemList.Components.Filter.ItemFilterListBulk") }}
+
 {% set customClass     = widget.settings.customClass.mobile %}
 {% set spacingSettings = widget.settings.spacing %}
 {% set inlinePadding   = WidgetHelper.getInlineSpacings(spacingSettings, spacingSettings.customPadding.mobile, "") %}
@@ -16,7 +18,7 @@
 
     <item-filter-list
         class="{{ "widget-filter-" ~ className }}"
-        :filter-list-bulk="true"
+        template="#vue-item-filter-list-bulk"
         :facet-data="{{ Twig.print('facets | json_encode') }}"
         :allowed-facets-types="{{ allowedFacetTypes | json_encode }}"
         :padding-classes="{{ spacingPadding | json_encode }}"

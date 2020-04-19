@@ -2,15 +2,15 @@
 
 namespace Ceres\Widgets\Helper\Factories\Settings;
 
-use Plenty\Modules\Webshop\Contracts\WebstoreConfigurationRepositoryContract;
+use IO\Services\WebstoreConfigurationService;
 
 class ItemSortValueListFactory extends ValueListFactory
 {
     public static function make($withRandomOption = false)
     {
-        /** @var WebstoreConfigurationRepositoryContract $webstoreConfigurationRepository */
-        $webstoreConfigurationRepository = pluginApp(WebstoreConfigurationRepositoryContract::class);
-        $sortBySales = $webstoreConfigurationRepository->getWebstoreConfiguration()->itemSortByMonthlySales === 1;
+        /** @var WebstoreConfigurationService $webstoreConfigService */
+        $webstoreConfigService = pluginApp(WebstoreConfigurationService::class);
+        $sortBySales = $webstoreConfigService->getWebstoreConfig()->itemSortByMonthlySales === 1;
 
         $list = parent::make()
             ->addEntry('default.recommended_sorting', 'Widget.itemRecommendedSorting')
@@ -34,13 +34,7 @@ class ItemSortValueListFactory extends ValueListFactory
         }
 
         return $list
-            ->addEntry(
-                'variation.position_asc',
-                $sortBySales ? 'Widget.itemVariationTopseller_asc' : 'Widget.itemVariationPosition_asc'
-            )
-            ->addEntry(
-                'variation.position_desc',
-                $sortBySales ? 'Widget.itemVariationTopseller_desc' : 'Widget.itemVariationPosition_desc'
-            );
+            ->addEntry('variation.position_asc', $sortBySales ? 'Widget.itemVariationTopseller_asc' : 'Widget.itemVariationPosition_asc')
+            ->addEntry('variation.position_desc', $sortBySales ? 'Widget.itemVariationTopseller_desc' : 'Widget.itemVariationPosition_desc');
     }
 }

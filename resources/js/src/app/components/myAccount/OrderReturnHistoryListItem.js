@@ -1,11 +1,6 @@
 import Vue from "vue";
-import OrderReturnSetComponentList from "../orderReturn/OrderReturnSetComponentList.vue";
 
-export default Vue.component("order-return-history-list-item", {
-
-    components: {
-        OrderReturnSetComponentList
-    },
+Vue.component("order-return-history-list-item", {
 
     props: {
         template:

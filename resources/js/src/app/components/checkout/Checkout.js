@@ -7,7 +7,7 @@ import { removeUrlParam } from "../../services/UrlService";
 import Vue from "vue";
 import { mapState } from "vuex";
 
-export default Vue.component("checkout", {
+Vue.component("checkout", {
 
     props: {
         template: {

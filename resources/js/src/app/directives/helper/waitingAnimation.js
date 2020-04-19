@@ -3,6 +3,25 @@ import Vue from "vue";
 Vue.directive("waiting-animation", {
     bind(el)
     {
-        console.warn(`Directive "v-waiting-animation" is deprecated. Please use "icon" component instead.`);
+        el.initialClass = el.className;
+        el.waitingClass = el.getAttribute("waiting-class") || "fa fa-circle-o-notch fa-spin";
+    },
+
+    update(el, binding)
+    {
+        if (binding.value)
+        {
+            el.className = "";
+            el.className = el.waitingClass;
+
+            if (el.initialClass.includes("fa-lg"))
+            {
+                el.className += " fa-lg";
+            }
+        }
+        else
+        {
+            el.className = el.initialClass;
+        }
     }
 });

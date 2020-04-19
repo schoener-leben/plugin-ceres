@@ -2,8 +2,13 @@
 
 namespace Ceres\Migrations;
 
+use IO\Services\WebstoreConfigurationService;
+use Plenty\Modules\Plugin\Models\Plugin;
+use Plenty\Modules\Plugin\Contracts\ConfigurationRepositoryContract;
+use Plenty\Modules\Plugin\Contracts\PluginRepositoryContract;
 use Plenty\Modules\ShopBuilder\Contracts\ContentLinkRepositoryContract;
 use Plenty\Modules\ShopBuilder\Contracts\ContentRepositoryContract;
+use Plenty\Modules\System\Module\Contracts\PlentyModuleRepositoryContract;
 
 /**
  * Class RebuildShopBuilderHomepage

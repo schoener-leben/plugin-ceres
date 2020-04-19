@@ -5,7 +5,6 @@ namespace Ceres\Widgets\Presets;
 use Ceres\Config\CeresConfig;
 use Ceres\Widgets\Helper\Factories\PresetWidgetFactory;
 use Ceres\Widgets\Helper\PresetHelper;
-use Ceres\Widgets\Presets\Helper\HasWhiteBackground;
 use IO\Extensions\Constants\ShopUrls;
 use IO\Helper\RouteConfig;
 use Plenty\Modules\ShopBuilder\Contracts\ContentPreset;
@@ -13,8 +12,6 @@ use Plenty\Plugin\Translation\Translator;
 
 class DefaultOrderConfirmationPreset implements ContentPreset
 {
-    use HasWhiteBackground;
-
     /** @var PresetHelper */
     private $preset;
     
@@ -44,8 +41,6 @@ class DefaultOrderConfirmationPreset implements ContentPreset
 
         $this->shopUrls = pluginApp(ShopUrls::class);
         
-        $this->createBackground($this->preset);
-
         $this->createHeadline();
         
         $this->createTwoColumnWidget();
@@ -70,35 +65,35 @@ class DefaultOrderConfirmationPreset implements ContentPreset
     
     private function createHeadline()
     {
-        $this->createWidget("Ceres::InlineTextWidget")
-             ->withSetting("text", "<h1 class=\"h2\">{{ trans(\"Ceres::Template.orderConfirmationThanks\") }}</h1>")
-             ->withSetting("appearance", "none")
-             ->withSetting("spacing.customPadding", true)
-             ->withSetting("spacing.padding.top.value", 0)
-             ->withSetting("spacing.padding.top.unit", null)
-             ->withSetting("spacing.padding.bottom.value", 0)
-             ->withSetting("spacing.padding.bottom.unit", null)
-             ->withSetting("spacing.padding.left.value", 0)
-             ->withSetting("spacing.padding.left.unit", null)
-             ->withSetting("spacing.customMargin", true)
-             ->withSetting("spacing.margin.bottom.value", 0)
-             ->withSetting("spacing.margin.bottom.unit", null);
+        $this->preset->createWidget("Ceres::InlineTextWidget")
+                     ->withSetting("text", "<h1 class=\"h2\">{{ trans(\"Ceres::Template.orderConfirmationThanks\") }}</h1>")
+                     ->withSetting("appearance", "none")
+                     ->withSetting("spacing.customPadding", true)
+                     ->withSetting("spacing.padding.top.value", 0)
+                     ->withSetting("spacing.padding.top.unit", null)
+                     ->withSetting("spacing.padding.bottom.value", 0)
+                     ->withSetting("spacing.padding.bottom.unit", null)
+                     ->withSetting("spacing.padding.left.value", 0)
+                     ->withSetting("spacing.padding.left.unit", null)
+                     ->withSetting("spacing.customMargin", true)
+                     ->withSetting("spacing.margin.bottom.value", 0)
+                     ->withSetting("spacing.margin.bottom.unit", null);
 
-        $this->createWidget("Ceres::InlineTextWidget")
-             ->withSetting("text", "<p>{{ trans(\"Ceres::Template.orderConfirmationWillBeProcessed\") }}</p>")
-             ->withSetting("appearance", "none")
-             ->withSetting("spacing.customMargin", true)
-             ->withSetting("spacing.margin.bottom.value", 5)
-             ->withSetting("spacing.margin.bottom.unit", null)
-             ->withSetting("spacing.customPadding", true)
-             ->withSetting("spacing.padding.top.value", 0)
-             ->withSetting("spacing.padding.top.unit", null)
-             ->withSetting("spacing.padding.bottom.value", 0)
-             ->withSetting("spacing.padding.bottom.unit", null)
-             ->withSetting("spacing.padding.left.value", 0)
-             ->withSetting("spacing.padding.left.unit", null)
-             ->withSetting("spacing.padding.right.value", 0)
-             ->withSetting("spacing.padding.right.unit", null);
+        $this->preset->createWidget("Ceres::InlineTextWidget")
+                     ->withSetting("text", "<p>{{ trans(\"Ceres::Template.orderConfirmationWillBeProcessed\") }}</p>")
+                     ->withSetting("appearance", "none")
+                     ->withSetting("spacing.customMargin", true)
+                     ->withSetting("spacing.margin.bottom.value", 5)
+                     ->withSetting("spacing.margin.bottom.unit", null)
+                     ->withSetting("spacing.customPadding", true)
+                     ->withSetting("spacing.padding.top.value", 0)
+                     ->withSetting("spacing.padding.top.unit", null)
+                     ->withSetting("spacing.padding.bottom.value", 0)
+                     ->withSetting("spacing.padding.bottom.unit", null)
+                     ->withSetting("spacing.padding.left.value", 0)
+                     ->withSetting("spacing.padding.left.unit", null)
+                     ->withSetting("spacing.padding.right.value", 0)
+                     ->withSetting("spacing.padding.right.unit", null);
     }
     
     private function createOrderDataWidget()
@@ -153,14 +148,14 @@ class DefaultOrderConfirmationPreset implements ContentPreset
 
     private function createSeparatorWidget()
     {
-        $this->createWidget("Ceres::SeparatorWidget")
-             ->withSetting("customClass","");
+        $this->preset->createWidget("Ceres::SeparatorWidget")
+                     ->withSetting("customClass","");
     }
 
     private function createFourColumnWidget()
     {
-        $this->fourColumnWidget = $this->createWidget("Ceres::FourColumnWidget")
-                                       ->withSetting("customClass","");
+        $this->fourColumnWidget = $this->preset->createWidget("Ceres::FourColumnWidget")
+                                               ->withSetting("customClass","");
     }
 
     private function createBottomNavigation()
@@ -204,8 +199,8 @@ class DefaultOrderConfirmationPreset implements ContentPreset
 
     private function createTwoColumnWidget()
     {
-        $this->twoColumnWidget = $this->createWidget('Ceres::TwoColumnWidget')
-                                      ->withSetting("layout", "oneToOne");
+        $this->twoColumnWidget = $this->preset->createWidget("Ceres::TwoColumnWidget")
+                                              ->withSetting("layout", "oneToOne");
     }
     
     private function createThreeColumnWidget()

@@ -3,17 +3,11 @@ import ValidationService from "../../../services/ValidationService";
 import TranslationService from "../../../services/TranslationService";
 import Vue from "vue";
 import { mapState } from "vuex";
-import CreateUpdateAddress from "./CreateUpdateAddress/CreateUpdateAddress";
 
 const ApiService = require("../../../services/ApiService");
 const ModalService = require("../../../services/ModalService");
 
-export default Vue.component("address-select", {
-
-    components:
-    {
-        CreateUpdateAddress
-    },
+Vue.component("address-select", {
 
     props:
     {

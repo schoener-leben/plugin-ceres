@@ -1,7 +1,7 @@
 import TranslationService from "../../services/TranslationService";
 import Vue from "vue";
 
-export default Vue.component("order-documents", {
+Vue.component("order-documents", {
 
     props: {
         template:

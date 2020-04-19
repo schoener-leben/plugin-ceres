@@ -91,7 +91,6 @@ const MonetaryFormatter = (function()
     MonetaryFormatter.prototype.format = function(value, currency)
     {
         let patternIndex = 0;
-
         let prefix = "";
 
         if (isNullOrUndefined(value) || Number.isNaN(parseFloat(value)))

@@ -1,4 +1,3 @@
-{% set itemsPerPage = itemsPerPage ?? [] %}
 {% if ceresConfig.pagination.itemsPerPage not in itemsPerPage %}
     {% set itemsPerPage = itemsPerPage | merge([ceresConfig.pagination.itemsPerPage]) %}
 {% endif %}

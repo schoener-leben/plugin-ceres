@@ -143,9 +143,7 @@ class SidenavigationChildrenLoader
         const fragment = document.createRange().createContextualFragment(this.template);
         const elements = fragment.childNodes;
         const children = [];
-
         let i = 0;
-
         let node;
 
         while (node = elements[i++])

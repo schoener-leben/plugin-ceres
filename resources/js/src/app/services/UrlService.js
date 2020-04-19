@@ -11,7 +11,6 @@ function _parseUrlParam(paramKey, paramValue, result)
     }
 
     const regex = /(^([^\[]+)|\[([^\]]*)\])/gm;
-
     let match;
     const keyList = [];
 
@@ -81,9 +80,7 @@ export function getUrlParams(urlParams)
     }
 
     const regex = /[\\?&]([^=&#]+)=([^&#]*)/gm;
-
     let result = {};
-
     let match;
 
     while ((match = regex.exec(urlParams)) !== null)

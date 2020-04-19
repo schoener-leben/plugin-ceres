@@ -4,7 +4,6 @@ namespace Ceres\Widgets\Presets;
 
 use Ceres\Widgets\Helper\Factories\PresetWidgetFactory;
 use Ceres\Widgets\Helper\PresetHelper;
-use Ceres\Widgets\Presets\Helper\HasWhiteBackground;
 use IO\Extensions\Constants\ShopUrls;
 use IO\Helper\RouteConfig;
 use Plenty\Modules\ShopBuilder\Contracts\ContentPreset;
@@ -12,10 +11,14 @@ use Plenty\Plugin\Translation\Translator;
 
 class DefaultBasketPreset implements ContentPreset
 {
-    use HasWhiteBackground;
-
     /** @var PresetHelper */
     private $preset;
+
+    /** @var PresetWidgetFactory */
+    private $twoColumnWidget;
+
+    /** @var PresetWidgetFactory */
+    private $stickyContainer;
 
     /** @var ShopUrls */
     private $shopUrls;
@@ -30,118 +33,117 @@ class DefaultBasketPreset implements ContentPreset
         $this->shopUrls = pluginApp(ShopUrls::class);
 
         $this->createHeadline();
-        $twoColumnWidget = $this->preset->createWidget('Ceres::TwoColumnWidget')
-            ->withSetting('layout', 'sevenToFive');
+        $this->createTwoColumnWidget();
 
-        $this->createLeftSide($twoColumnWidget);
-        $this->createRightSide($twoColumnWidget);
+        $this->createBasketWidget();
+
+        $this->createStickyContainer();
+        $this->createShippingCountryWidget();
+        $this->createBasketTotalsWidget();
+        $this->createCouponWidget();
+        $this->createLinkWidget();
 
         return $this->preset->toArray();
     }
 
     private function createHeadline()
     {
-        $this->preset->createWidget('Ceres::InlineTextWidget')
-            ->withSetting('text', '<h1>{{ trans(\'Ceres::Template.basket\') }}</h1>')
-            ->withSetting('appearance', 'none')
-            ->withSetting('spacing.customPadding', true)
-            ->withSetting('spacing.padding.top.value', 5)
-            ->withSetting('spacing.padding.top.unit', null)
-            ->withSetting('spacing.padding.bottom.value', 0)
-            ->withSetting('spacing.padding.bottom.unit', null)
-            ->withSetting('spacing.padding.left.value', 0)
-            ->withSetting('spacing.padding.left.unit', null)
-            ->withSetting('spacing.padding.right.value', 0)
-            ->withSetting('spacing.padding.right.unit', null)
-            ->withSetting('spacing.customMargin', true)
-            ->withSetting('spacing.margin.top.value', 3)
-            ->withSetting('spacing.margin.top.unit', null);
+        $this->preset->createWidget("Ceres::InlineTextWidget")
+            ->withSetting("text", "<h1>{{ trans(\"Ceres::Template.basket\") }}</h1>")
+            ->withSetting("appearance", "none")
+            ->withSetting("spacing.customPadding", true)
+            ->withSetting("spacing.padding.top.value", 5)
+            ->withSetting("spacing.padding.top.unit", null)
+            ->withSetting("spacing.padding.bottom.value", 0)
+            ->withSetting("spacing.padding.bottom.unit", null)
+            ->withSetting("spacing.padding.left.value", 0)
+            ->withSetting("spacing.padding.left.unit", null)
+            ->withSetting("spacing.padding.right.value", 0)
+            ->withSetting("spacing.padding.right.unit", null)
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.top.value", 3)
+            ->withSetting("spacing.margin.top.unit", null);
 
-        $this->preset->createWidget('Ceres::SeparatorWidget')
+        $this->preset->createWidget("Ceres::SeparatorWidget")
+                     ->withSetting('customClass', '');
+    }
+
+    private function createTwoColumnWidget()
+    {
+        $this->twoColumnWidget = $this->preset->createWidget('Ceres::TwoColumnWidget')
+            ->withSetting('layout', 'sevenToFive');
+    }
+
+    private function createBasketWidget()
+    {
+        $this->twoColumnWidget->createChild('first', 'Ceres::BasketWidget')
+            ->withSetting('customClass', 'bg-white')
+            ->withSetting('basketDetailsData', ["basket.item.availability"])
+            ->withSetting("spacing.customPadding", true)
+            ->withSetting("spacing.padding.top.value", 4)
+            ->withSetting("spacing.padding.top.unit", null)
+            ->withSetting("spacing.padding.bottom.value", 4)
+            ->withSetting("spacing.padding.bottom.unit", null)
+            ->withSetting("spacing.padding.left.value", 3)
+            ->withSetting("spacing.padding.left.unit", null)
+            ->withSetting("spacing.padding.right.value", 3)
+            ->withSetting("spacing.padding.right.unit", null);
+    }
+
+    private function createStickyContainer()
+    {
+        $this->stickyContainer = $this->twoColumnWidget->createChild('second', 'Ceres::StickyContainerWidget')
+                                                       ->withSetting('customClass', 'px-3 py-4 bg-white');
+    }
+
+    private function createShippingCountryWidget()
+    {
+        $this->stickyContainer->createChild('sticky', 'Ceres::ShippingCountryWidget')
+            ->withSetting('customClass', '');
+
+        $this->stickyContainer->createChild('sticky', 'Ceres::SeparatorWidget')
             ->withSetting('customClass', '');
     }
 
-    /**
-     * @param PresetWidgetFactory $twoColumnWidget
-     */
-    private function createLeftSide($twoColumnWidget)
+    private function createBasketTotalsWidget()
     {
-        $bgContainer = $twoColumnWidget->createChild('first', 'Ceres::BackgroundWidget');
-        $this->setBackgroundWidgetSettings($bgContainer)
-            ->withSetting("spacing.margin.top.value", 0)
-            ->withSetting("spacing.margin.bottom.value", 0);
+        $this->stickyContainer->createChild('sticky', 'Ceres::BasketTotalsWidget')
+            ->withSetting('customClass', '')
+            ->withSetting('visibleFields', ["basketValueNet", "basketValueGross", "rebate", "shippingCostsNet", "shippingCostsGross", "promotionCoupon", "totalSumNet", "vats", "totalSumGross", "salesCoupon", "openAmount"]);
 
-        // BASKET ITEMS
-        $bgContainer->createChild('background', 'Ceres::BasketWidget')
-            ->withSetting('basketDetailsData', ['basket.item.availability']);
+        $this->stickyContainer->createChild('sticky', 'Ceres::SeparatorWidget')
+            ->withSetting('customClass', '');
     }
 
-    /**
-     * @param PresetWidgetFactory $twoColumnWidget
-     */
-    private function createRightSide($twoColumnWidget)
+    private function createCouponWidget()
     {
-        $stickyContainer = $twoColumnWidget->createChild('second', 'Ceres::StickyContainerWidget');
-        $bgContainer = $stickyContainer->createChild('sticky', 'Ceres::BackgroundWidget');
-        $this->setBackgroundWidgetSettings($bgContainer)
-            ->withSetting("spacing.margin.top.value", 0)
-            ->withSetting("spacing.margin.bottom.value", 0);
-
-        // SHIPPING COUNTY SELECT
-        $bgContainer->createChild('background', 'Ceres::ShippingCountryWidget')
+        $this->stickyContainer->createChild('sticky', 'Ceres::CouponWidget')
             ->withSetting('customClass', '');
 
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
+        $this->stickyContainer->createChild('sticky', 'Ceres::SeparatorWidget')
             ->withSetting('customClass', '');
+    }
 
-        // BASKET TOTALS
-        $bgContainer->createChild('background', 'Ceres::BasketTotalsWidget')
-            ->withSetting('customClass', '')
-            ->withSetting(
-                'visibleFields',
-                [
-                    'basketValueNet',
-                    'basketValueGross',
-                    'rebate',
-                    'shippingCostsNet',
-                    'shippingCostsGross',
-                    'promotionCoupon',
-                    'totalSumNet',
-                    'vats',
-                    'totalSumGross',
-                    'salesCoupon',
-                    'openAmount'
-                ]
-            );
+    private function createLinkWidget()
+    {
+        $checkoutLinkWidget = $this->stickyContainer->createChild("sticky", "Ceres::LinkWidget")
+            ->withSetting("customClass", "")
+            ->withSetting("appearance", "primary")
+            ->withSetting("size", "")
+            ->withSetting("block", "true")
+            ->withSetting("text", $this->translator->trans("Ceres::Template.basketCheckout"));
 
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting('customClass', '');
-
-        // COUPON
-        $bgContainer->createChild('background', 'Ceres::CouponWidget')
-            ->withSetting('customClass', '');
-
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting('customClass', '');
-
-        // CHECKOUT BUTTON
-        $checkoutLinkWidget = $bgContainer->createChild('background', 'Ceres::LinkWidget')
-            ->withSetting('customClass', '')
-            ->withSetting('appearance', 'primary')
-            ->withSetting('size', '')
-            ->withSetting('block', 'true')
-            ->withSetting('text', $this->translator->trans('Ceres::Template.basketCheckout'));
-
-        if (in_array(RouteConfig::CHECKOUT, RouteConfig::getEnabledRoutes()) && RouteConfig::getCategoryId(
-                RouteConfig::CHECKOUT
-            ) > 0) {
+        if (in_array(RouteConfig::CHECKOUT, RouteConfig::getEnabledRoutes()) && RouteConfig::getCategoryId(RouteConfig::CHECKOUT) > 0)
+        {
             $checkoutLinkWidget
-                ->withSetting('url.type', 'category')
-                ->withSetting('url.value', RouteConfig::getCategoryId(RouteConfig::CHECKOUT));
-        } else {
+                ->withSetting("url.type", "category")
+                ->withSetting("url.value", RouteConfig::getCategoryId(RouteConfig::CHECKOUT));
+        }
+        else
+        {
             $checkoutLinkWidget
-                ->withSetting('url.type', 'external')
-                ->withSetting('url.value', $this->shopUrls->checkout);
+                ->withSetting("url.type", "external")
+                ->withSetting("url.value", $this->shopUrls->checkout);
         }
     }
 }

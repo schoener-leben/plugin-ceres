@@ -12,13 +12,13 @@ Bei der Einrichtung von Ceres ist es notwendig, dass die zugewiesene Positionsnu
 
 ## Webshop bei Trusted Shops zertifizieren
 
-![](https://raw.githubusercontent.com/plentymarkets/plugin-ceres/stable/meta/images/eTrusted-Partner_Certified_Software.png)
+![](https://github.com/plentymarkets/plugin-ceres/tree/stable/meta/images/eTrusted-Partner_Certified_Software.png?raw=true)
 
 Sie möchten Ihren Webshop bei Trusted Shops zertifizieren? Ceres ist bereits durch Trusted Shops vorzertifiziert. Dadurch geht die vollständige Zertifizierung durch Trusted Shops schnellstmöglich vonstatten. Alle dafür nötigen Informationen finden Sie [hier](https://www.trustedshops.de/shopbetreiber/bestellen.html?shopsoftware=PLENTYMARKETS).
 
 ## Webshop bei EHI zertifizieren
 
-![](https://raw.githubusercontent.com/plentymarkets/plugin-ceres/stable/meta/images/EHI-gepruefter-online-shop.png)
+![](https://github.com/plentymarkets/plugin-ceres/tree/stable/meta/images/EHI-gepruefter-online-shop.png?raw=true)
 
 Sie möchten Ihren Webshop durch EHI zertifizieren lassen?
 Da Ceres bereits durch EHI vorzertifiziert ist, lässt sich die vollständige EHI-Zertifizierung schnell und einfach abwickeln.

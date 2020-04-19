@@ -118,7 +118,6 @@ function _validateElement(elem)
     {
         return i.trim();
     }) || ["text"];
-
     let hasError       = false;
 
     _findFormControls($elem).each(function(i, formControl)

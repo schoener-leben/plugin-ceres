@@ -3,7 +3,7 @@ import TranslationService from "../../services/TranslationService";
 import Vue from "vue";
 import { mapState } from "vuex";
 
-export default Vue.component("subscribe-newsletter-check", {
+Vue.component("subscribe-newsletter-check", {
 
     props: {
         template:

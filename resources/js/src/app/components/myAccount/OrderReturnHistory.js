@@ -3,14 +3,8 @@ const NotificationService = require("../../services/NotificationService");
 
 import TranslationService from "../../services/TranslationService";
 import Vue from "vue";
-import OrderReturnHistoryItem from "./OrderReturnHistoryItem";
 
-export default Vue.component("order-return-history", {
-
-    components:
-    {
-        OrderReturnHistoryItem
-    },
+Vue.component("order-return-history", {
 
     props: [
         "template",

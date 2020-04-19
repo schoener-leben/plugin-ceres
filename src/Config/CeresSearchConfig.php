@@ -2,19 +2,17 @@
 
 namespace Ceres\Config;
 
-use Plenty\Modules\Webshop\Helpers\PluginConfig;
+use IO\Helper\PluginConfig;
+use Plenty\Plugin\ConfigRepository;
 
 class CeresSearchConfig extends PluginConfig
 {
     public $forwardToSingleItem;
-    
-    protected function getPluginName()
-    {
-        return 'Ceres';
-    }
 
-    protected function load()
+    public function __construct(ConfigRepository $configRepository)
     {
-        $this->forwardToSingleItem = $this->getBooleanValue('search.forwardToSingleItem', false );
+        parent::__construct($configRepository, "Ceres");
+
+        $this->forwardToSingleItem = $this->getBooleanValue("search.forwardToSingleItem", false );
     }
 }

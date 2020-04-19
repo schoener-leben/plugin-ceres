@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-export default Vue.component("address-header", {
+Vue.component("address-header", {
 
     props: {
         template: {

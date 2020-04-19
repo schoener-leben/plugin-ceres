@@ -5,7 +5,6 @@ Vue.filter("fileName", path =>
 {
     const splitPath = path.split("/");
     const fileName  = splitPath[splitPath.length - 1];
-
     let match = /^(Item\w+)_(Char\d+)_(\d{4})_(.*)$/.exec(fileName);
 
     if (!isNullOrUndefined(match) && !isNullOrUndefined(match[4]))

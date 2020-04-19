@@ -4,6 +4,8 @@ namespace Ceres\Wizard\ShopWizard\Steps\Builder;
 
 use Ceres\Wizard\ShopWizard\Config\SeoConfig;
 use Ceres\Wizard\ShopWizard\Helpers\StepHelper;
+use Plenty\Modules\System\Contracts\WebstoreConfigurationRepositoryContract;
+use Plenty\Plugin\Application;
 
 /**
  * Class SeoStep
@@ -38,7 +40,7 @@ class SeoStep extends Step
     {
         $metaRobotsOptions = SeoConfig::getMetaRobotsOptions();
         $metaOptions       = StepHelper::generateTranslatedListBoxValues($metaRobotsOptions);
-
+        
         return [
             "title" => "Wizard.robotSettings",
             "description" => "Wizard.robotSettingsDescription",
@@ -96,7 +98,7 @@ class SeoStep extends Step
     private function generateAvailabilitiesFormFields($availabilities):array
     {
         $formFields = [];
-
+        
         $availabilitiesOptions     = SeoConfig::getAvailabilitiesOptions();
         $availabilitiesListOptions = StepHelper::generateTranslatedListBoxValues($availabilitiesOptions);
 
@@ -111,7 +113,7 @@ class SeoStep extends Step
                 ]
             ];
         }
-
+        
         return $formFields;
     }
 
@@ -144,7 +146,7 @@ class SeoStep extends Step
     {
         $siteMapData    = SeoConfig::getSiteMapOptions();
         $siteMapOptions = StepHelper::generateTranslatedListBoxValues($siteMapData);
-
+        
         return [
             "title" => "Wizard.siteMapXml",
             "description" => "Wizard.siteMapXmlDescription",

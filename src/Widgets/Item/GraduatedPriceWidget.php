@@ -17,7 +17,7 @@ class GraduatedPriceWidget extends BaseWidget
         return WidgetDataFactory::make("Ceres::GraduatedPriceWidget")
             ->withLabel("Widget.graduatedPriceLabel")
             ->withPreviewImageUrl("/images/widgets/graduated-price.svg")
-            ->withType(WidgetTypes::SINGLE_ITEM)
+            ->withType(WidgetTypes::ITEM)
             ->withCategory(WidgetCategories::ITEM)
             ->withPosition(500)
             ->toArray();

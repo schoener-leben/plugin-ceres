@@ -2,38 +2,36 @@
 
 namespace Ceres\Config;
 
-use Plenty\Modules\Webshop\Helpers\PluginConfig;
+use IO\Helper\PluginConfig;
+use Plenty\Plugin\ConfigRepository;
 
 class CeresLogConfig extends PluginConfig
 {
     public $data;
     public $performanceLevel;
     public $checkSyntax;
-    
-    protected function getPluginName()
-    {
-        return 'Ceres';
-    }
 
-    protected function load()
+    public function __construct(ConfigRepository $configRepository)
     {
+        parent::__construct($configRepository, "Ceres");
+
         $this->data = $this->getMultiSelectValue(
-            'log.data',
+            "log.data",
             [
-                'print_errors',
-                'print_success',
-                'print_warnings',
-                'print_infos',
-                'print_stack_trace',
-                'show_error_code'
+                "print_errors",
+                "print_success",
+                "print_warnings",
+                "print_infos",
+                "print_stack_trace",
+                "show_error_code"
             ],
             [
-                'print_errors',
-                'print_success'
+                "print_errors",
+                "print_success"
             ]
         );
 
-        $this->performanceLevel = $this->getTextValue( 'log.performance.level', 'live' );
-        $this->checkSyntax = $this->getBooleanValue('log.check_syntax', true);
+        $this->performanceLevel = $this->getTextValue( "log.performance.level", "live" );
+        $this->checkSyntax = $this->getBooleanValue("log.check_syntax", true);
     }
 }

@@ -6,15 +6,15 @@ use Ceres\Config\CeresConfig;
 use Ceres\Helper\BuildHash;
 use IO\Extensions\Constants\ShopUrls;
 use IO\Helper\ContextInterface;
-use IO\Helper\Utils;
 use IO\Services\BasketService;
 use IO\Services\CategoryService;
 use IO\Services\CheckoutService;
+use IO\Services\CustomerService;
 use IO\Services\NotificationService;
+use IO\Services\SessionStorageService;
 use IO\Services\TemplateService;
+use IO\Services\WebstoreConfigurationService;
 use Plenty\Modules\ShopBuilder\Helper\ShopBuilderRequest;
-use Plenty\Modules\Webshop\Contracts\ContactRepositoryContract;
-use Plenty\Modules\Webshop\Contracts\WebstoreConfigurationRepositoryContract;
 use Plenty\Plugin\Application;
 use Plenty\Plugin\Http\Request;
 
@@ -57,11 +57,13 @@ class GlobalContext implements ContextInterface
     public $isSafeMode;
     public $bodyClasses;
     public $buildHash;
-    public $assetName = "ceres-checkout";
 
     public function init($params)
     {
         $this->params = $params;
+
+        /** @var SessionStorageService $sessionStorageService */
+        $sessionStorageService = pluginApp(SessionStorageService::class);
 
         /** @var CategoryService $categoryService */
         $categoryService = pluginApp(CategoryService::class);
@@ -69,20 +71,17 @@ class GlobalContext implements ContextInterface
         /** @var TemplateService $templateService */
         $templateService = pluginApp(TemplateService::class);
 
-        /** @var WebstoreConfigurationRepositoryContract $webstoreConfigurationRepository */
-        $webstoreConfigurationRepository = pluginApp(WebstoreConfigurationRepositoryContract::class);
-
+        /** @var WebstoreConfigurationService $webstoreConfigService */
+        $webstoreConfigService = pluginApp(WebstoreConfigurationService::class);
+        
         /** @var BasketService $basketService */
         $basketService = pluginApp(BasketService::class);
 
         /** @var CheckoutService $checkoutService */
         $checkoutService = pluginApp(CheckoutService::class);
 
-        /** @var ContactRepositoryContract $contactRepository */
-        $contactRepository = pluginApp(ContactRepositoryContract::class);
-
-        /** @var ContactRepositoryContract $contactRepository */
-        $contactRepository = pluginApp(ContactRepositoryContract::class);
+        /** @var CustomerService $customerService */
+        $customerService = pluginApp(CustomerService::class);
 
         /** @var ShopBuilderRequest $shopBuilderRequest */
         $shopBuilderRequest = pluginApp(ShopBuilderRequest::class);
@@ -97,11 +96,11 @@ class GlobalContext implements ContextInterface
         $app = pluginApp(Application::class);
 
         $this->ceresConfig = pluginApp(CeresConfig::class);
-        $this->webstoreConfig = $webstoreConfigurationRepository->getWebstoreConfiguration();
+        $this->webstoreConfig = $webstoreConfigService->getWebstoreConfig();
 
         $this->request = pluginApp(Request::class);
 
-        $this->lang = Utils::getLang();
+        $this->lang = $sessionStorageService->getLang();
 
         $this->homepageURL = $shopUrls->home;
         $this->metaLang = 'de';
@@ -121,7 +120,7 @@ class GlobalContext implements ContextInterface
             $this->ceresConfig->header->showCategoryTypes,
             $this->lang,
             $this->ceresConfig->header->menuLevels,
-            $contactRepository->getContactClassId()
+            $customerService->getContactClassId()
         );
 
         $this->notifications = $notificationService->getNotifications();
@@ -130,16 +129,16 @@ class GlobalContext implements ContextInterface
 
         $this->currencyData = $checkoutService->getCurrencyData();
 
-        $this->showNetPrices = $contactRepository->showNetPrices();
+        $this->showNetPrices = $customerService->showNetPrices();
 
-        $this->splitItemBundle = $webstoreConfigurationRepository->getWebstoreConfiguration()->dontSplitItemBundle;
+        $this->splitItemBundle = $webstoreConfigService->getWebstoreConfig()->dontSplitItemBundle;
 
         $this->templateEvent = $templateService->getCurrentTemplate();
 
         $this->isShopBuilder = $shopBuilderRequest->isShopBuilder();
 
         $this->isSafeMode = $app->isTemplateSafeMode();
-
+       
         $this->bodyClasses = [];
         $templateClass = str_replace('tpl', 'page', $this->templateEvent);
         $templateClass = str_replace('.', '-', $templateClass);

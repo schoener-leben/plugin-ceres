@@ -55,14 +55,14 @@ class GoogleMapsWidget extends BaseWidget
             ->withTooltip('Widget.googleMapsZoomTooltip');
 
         $settings->createSelect('aspectRatio')
-            ->withDefaultValue('3-1')
+            ->withDefaultValue('prop-xs-3-1')
             ->withName('Widget.googleMapsAspectRatioLabel')
             ->withTooltip('Widget.googleMapsAspectRatioTooltip')
             ->withListBoxValues(
                 ValueListFactory::make()
-                    ->addEntry('3-1', 'Widget.googleMapsAspectRatioThreeToOne')
-                    ->addEntry('2-1', 'Widget.googleMapsAspectRatioTwoToOne')
-                    ->addEntry('1-1', 'Widget.googleMapsAspectRatioOneToOne')
+                    ->addEntry('prop-xs-3-1', 'Widget.googleMapsAspectRatioThreeToOne')
+                    ->addEntry('prop-xs-2-1', 'Widget.googleMapsAspectRatioTwoToOne')
+                    ->addEntry('prop-xs-1-1', 'Widget.googleMapsAspectRatioOneToOne')
                     ->toArray()
             );
 
@@ -76,7 +76,7 @@ class GoogleMapsWidget extends BaseWidget
         /** @var CeresConfig $config */
         $config = pluginApp(CeresConfig::class);
         $address = $widgetSettings['address']['mobile'];
-        $apiKey = $config->global->googleMapsApiKey;
+        $apiKey = $config->contact->apiKey;
 
         if (empty($address) || empty($apiKey)) {
             return [

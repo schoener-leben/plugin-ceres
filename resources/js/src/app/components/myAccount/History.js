@@ -1,14 +1,6 @@
 import Vue from "vue";
-import OrderHistory from "./OrderHistory";
-import OrderReturnHistory from "./OrderReturnHistory";
 
-export default Vue.component("history", {
-
-    components:
-    {
-        OrderHistory,
-        OrderReturnHistory
-    },
+Vue.component("history", {
 
     props: {
         template: String,

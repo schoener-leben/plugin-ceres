@@ -2,7 +2,8 @@
 
 namespace Ceres\Config;
 
-use Plenty\Modules\Webshop\Helpers\PluginConfig;
+use IO\Helper\PluginConfig;
+use Plenty\Plugin\ConfigRepository;
 
 class CeresMetaConfig extends PluginConfig
 {
@@ -14,21 +15,25 @@ class CeresMetaConfig extends PluginConfig
     public $robotsPrivacyPolicy;
     public $robotsTermsAndConditions;
     public $robotsSearchResult;
-    
-    protected function getPluginName()
-    {
-        return 'Ceres';
-    }
 
-    protected function load()
+    public function __construct(ConfigRepository $configRepository)
     {
-        $this->robotsHome                           = $this->getTextValue( 'meta.robots_home' , 'all' );
-        $this->robotsContact                        = $this->getTextValue( 'meta.robots_contact' , 'all' );
-        $this->robotsCancellationRights             = $this->getTextValue( 'meta.robots_cancel_rights' , 'all' );
-        $this->robotsCancellationForm               = $this->getTextValue( 'meta.robots_cancel_form' , 'all' );
-        $this->robotsLegalDisclosure                = $this->getTextValue( 'meta.robots_legal_disclosure' , 'all' );
-        $this->robotsPrivacyPolicy                  = $this->getTextValue( 'meta.robots_privacy_policy' , 'all' );
-        $this->robotsTermsAndConditions             = $this->getTextValue( 'meta.robots_terms_and_conditions' , 'all' );
-        $this->robotsSearchResult                   = $this->getTextValue( 'meta.robots_search_result' , 'all' );
+        parent::__construct($configRepository, "Ceres");
+
+        $this->robotsHome                           = $this->getTextValue( "meta.robots_home" , "all" );
+
+        $this->robotsContact                        = $this->getTextValue( "meta.robots_contact" , "all" );
+
+        $this->robotsCancellationRights             = $this->getTextValue( "meta.robots_cancel_rights" , "all" );
+
+        $this->robotsCancellationForm               = $this->getTextValue( "meta.robots_cancel_form" , "all" );
+
+        $this->robotsLegalDisclosure                = $this->getTextValue( "meta.robots_legal_disclosure" , "all" );
+
+        $this->robotsPrivacyPolicy                  = $this->getTextValue( "meta.robots_privacy_policy" , "all" );
+
+        $this->robotsTermsAndConditions             = $this->getTextValue( "meta.robots_terms_and_conditions" , "all" );
+
+        $this->robotsSearchResult                   = $this->getTextValue( "meta.robots_search_result" , "all" );
     }
 }

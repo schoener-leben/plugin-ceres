@@ -12669,6 +12669,8 @@ button:focus {
   .btn-icon.btn-lg, .btn-group-lg > .btn-icon.btn {
     padding: .95rem; }
   .btn-icon.btn-circle {
+    width: 33px;
+    height: 33px;
     border-radius: 50%; }
 
 .btn-default {
@@ -12989,6 +12991,8 @@ body.lb-disable-scrolling {
   -o-object-fit: contain;
      object-fit: contain;
   height: 100%; }
+  .owl-carousel .owl-item img:not([src]) {
+    opacity: 0; }
 
 .owl-carousel .owl-nav.disabled,
 .owl-carousel .owl-dots.disabled,
