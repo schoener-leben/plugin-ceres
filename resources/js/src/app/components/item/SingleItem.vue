@@ -117,6 +117,12 @@
                     <div class="col-12 col-md-7">
                         <!-- ITEM DESCRIPTION -->
                         <div class="my-5">
+						 {% if themeItem.free9%}
+							<div class="yt-container">
+							<iframe src="//www.youtube-nocookie.com/embed/{{themeItem.free9}}?rel=0&controls=0&showinfo=0" frameborder="0" allowfullscreen="" class="yt-video">
+							</iframe>
+							</div>
+						{% endif %}
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item" v-if="isDescriptionTabActive">
                                     <a class="nav-link active" data-toggle="tab" :href="'#details-' + currentVariation.variation.id" role="tab">{{ $translate("Ceres::Template.singleItemDescription") }}</a>
