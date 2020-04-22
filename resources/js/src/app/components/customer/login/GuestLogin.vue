@@ -1,12 +1,13 @@
 <template>
     <div>
+	<div class="modal-title h3">1. Schritt - Deine E-Mail-Adresse</div>	
         <form ref="form" method="post" class="mb-3 login-pwd-reset">
             <div class="input-unit" data-validate="mail">
                 <input type="email" name="email" autocomplete="email" :id="_uid" v-model="email" data-autofocus>
                 <label :for="_uid">{{ $translate("Ceres::Template.loginEmail") }}*</label>
             </div>
             <span class="error-msg">{{ $translate("Ceres::Template.loginEnterConfirmEmail") }}</span>
-
+			<span>Wir achten auf Deine Daten! Wir speichern deine Kontaktdaten nur zur Abwicklung Deines Einkaufes. Mehr dazu findest du in unserer Datenschutzerklärung.</span>	
             <div class="text-right">
                 <button @click.prevent="validate" :disabled="isDisabled" class="btn btn-primary btn-medium btn-appearance" :class="buttonSizeClass">
                     {{ $translate("Ceres::Template.loginNext") }}
