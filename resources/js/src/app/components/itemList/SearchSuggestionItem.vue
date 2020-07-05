@@ -8,7 +8,8 @@
                     :class="paddingClasses"
                     :style="paddingInlineStyles"
                     :key="index"
-                    :href="getTargetUrl(item)">
+                    :href="getTargetUrl(item)"
+                    tabindex="0">
 
                     <div class="image flex-shrink-0 mr-3" v-if="showImages">
                         <img v-if="item.image" :src="item.image">
@@ -88,6 +89,8 @@ export default {
             const search = this.autocompleteSearchString.split(/\s+/)
                 .filter(word => word.length)
                 .join("|");
+
+            label = (label || "").toString();
 
             return label
                 .replace(new RegExp(search, "ig"), match =>
