@@ -131,7 +131,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       expandedGroups: {}
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_7__["mapMutations"])(["toggleConsent"]), {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_7__["mapMutations"])(["toggleConsent"])), {}, {
     isConsented: function isConsented(key, defaultValue) {
       return this.$store.getters.isConsented(key, defaultValue);
     },
@@ -233,9 +233,7 @@ var render = function() {
                             staticClass: "custom-control-input",
                             attrs: { type: "checkbox" },
                             domProps: {
-                              checked: _vm.isConsented(
-                                "{{ consentGroup.key }}.*"
-                              )
+                              checked: _vm.isConsented(consentGroup.key + ".*")
                             }
                           }),
                           _vm._v(" "),
@@ -319,7 +317,9 @@ var render = function() {
                                             attrs: { type: "checkbox" },
                                             domProps: {
                                               checked: _vm.isConsented(
-                                                "{{ consentGroup.key }}.{{ consent.key }}"
+                                                consentGroup.key +
+                                                  "." +
+                                                  consent.key
                                               )
                                             }
                                           }),

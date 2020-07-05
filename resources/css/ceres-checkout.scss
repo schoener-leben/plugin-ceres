@@ -9235,6 +9235,7 @@ html.ios { // stylelint-disable-line selector-no-qualifying-type
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
+    outline: none;
 
     &:hover {
         background: $gray-300;
@@ -9432,7 +9433,17 @@ html.ie .always-visible-search { // stylelint-disable-line selector-no-qualifyin
         -o-object-fit: contain;
            object-fit: contain;
         height: 100%;
+    }
+}
 
+/* FIX rounding issue Card:115218 */
+.single-carousel {
+    .owl-item {
+        img {
+            width: 101%;
+            height: 101%;
+            margin-left: -1px;
+        }
     }
 }
 
@@ -10099,7 +10110,7 @@ html.ie {
     position: fixed;
     top: 10rem;
     right: .5rem;
-    z-index: $zindex-10;
+    z-index: $zindex-10 + 1;
 
     @include media-breakpoint-down(xs) {
         right: auto;
@@ -10169,7 +10180,7 @@ $border-width: 1px;
 
     & > textarea {
         overflow-y: auto;
-        white-space: normal;
+        white-space: pre-wrap;
     }
 
     & > label {
@@ -11258,6 +11269,9 @@ textarea.no-resize {
     @include border-radius(0 $border-radius $border-radius 0);
 
     .qty-btn {
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center; /* FF */
         background-color: $qty-box-bg;
         border: 1px solid $qty-box-border;
         -webkit-box-shadow: none;
@@ -11558,7 +11572,7 @@ html.crios {
     .filter-collapse {
         position: absolute;
         top: 100%;
-        z-index: $zindex-1;
+        z-index: $zindex-3 - 5;
         width: 100%;
         padding-right: 15px;
         margin-left: -15px;
@@ -12546,6 +12560,7 @@ html.ie .v-s-boxes .v-s-box.invalid { // stylelint-disable-line selector-no-qual
 }
 
 .widget-background {
+
     > .container-max {
         padding-right: 0;
         padding-left: 0;
@@ -12680,8 +12695,7 @@ html.ie .v-s-boxes .v-s-box.invalid { // stylelint-disable-line selector-no-qual
         padding-bottom: 0;
     }
 
-    > picture img,
-    > img {
+    img {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -13127,6 +13141,8 @@ html.ie {
 }
 
 .widget-item-list-caption {
+    word-wrap: break-word;
+
     h1,
     h2,
     h3,
@@ -13151,6 +13167,30 @@ html.ie {
         padding-top: .4rem;
         padding-bottom: .1rem;
         font-size: 1.5rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-align: inherit !important;
+            -ms-flex-align: inherit !important;
+                align-items: inherit !important; // stylelint-disable-line declaration-no-important
+
+        h1 {
+            font-size: 1.4rem;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
+        h3 {
+            font-size: 1rem;
+        }
+
+        a:last-child {
+            margin-bottom: 5px;
+        }
     }
 
     .widget-item-list-inline-caption * {
@@ -13301,6 +13341,11 @@ html.ie {
 
 html.ie .widget-grid .widget-inner-stacked { // stylelint-disable-line selector-no-qualifying-type
     display: block;
+}
+
+html.safari .widget-grid .widget-inner-stacked .widget-inner { // stylelint-disable-line selector-no-qualifying-type
+    -ms-flex-preferred-size: auto !important;
+        flex-basis: auto !important; // stylelint-disable-line declaration-no-important
 }
 
 .nav-link.text-appearance.active {
@@ -14157,6 +14202,7 @@ header .widget {
                 }
                 .widget-proportional.widget-prop#{$infix}-#{$i}-#{$j} {
                     height: auto !important; // stylelint-disable-line declaration-no-important
+                    min-height: auto !important; // stylelint-disable-line declaration-no-important
                     padding-bottom: percentage($j / $i) !important; // stylelint-disable-line declaration-no-important
                 }
             }
