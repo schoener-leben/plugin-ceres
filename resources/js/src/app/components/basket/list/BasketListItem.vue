@@ -59,7 +59,7 @@
                                     <div v-for="property in propertyGroup.properties">
                                         <strong v-if="propertyGroup.name">{{ propertyGroup.name }}: </strong>
                                         <span>{{ property.names.name }}</span>
-                                        <span v-if="property.cast == 'file'">
+                                        <span v-if="property.cast === 'file'">
                                             <a :href="property.values.value | propertyFileUrl" v-html="property.values.value" target="_blank"></a>
                                         </span>
                                         <span v-else v-html="property.values.value"></span>
@@ -96,9 +96,9 @@
 
                 <div class="small" v-if="basketItem.basketItemOrderParams && basketItem.basketItemOrderParams.length">
                     <div class="font-weight-bold my-1">{{ $translate("Ceres::Template.basketAdditionalOptions") }}:</div>
-                    <ul class="ml-3">
+                    <ul class="ml-1 pl-3">
                         <li v-for="property in basketItem.basketItemOrderParams" :key="property.propertyId" v-show="isPropertyVisible(property.propertyId)">
-                            <span class="d-block text-truncate">
+                            <span class="d-block">
                                 <strong :class="{ 'colon': property.type.length > 0 }">{{ property.name }} ({{ $translate("Ceres::Template.basketIncludeAbbr") }} {{ basketItem.variation.data.properties | propertySurcharge(property.propertyId) | currency }})</strong>
                                 <span>
                                     <order-property-value :property="property"></order-property-value>

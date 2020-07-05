@@ -169,14 +169,14 @@ var ApiService = __webpack_require__(/*! ../../services/ApiService */ "./resourc
       });
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_10__["mapState"])({
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_10__["mapState"])({
     basketItems: function basketItems(state) {
       return state.basket.items;
     },
     isBasketItemQuantityUpdate: function isBasketItemQuantityUpdate(state) {
       return state.basket.isBasketItemQuantityUpdate;
     }
-  }), {
+  })), {}, {
     isLastBasketEntrySet: function isLastBasketEntrySet() {
       return !Object(_helper_utils__WEBPACK_IMPORTED_MODULE_9__["isNullOrUndefined"])(this.basketItem);
     },
@@ -359,7 +359,7 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "ul",
-                                { staticClass: "ml-0 pl-3" },
+                                { staticClass: "ml-1 pl-3" },
                                 _vm._l(_vm.shownOrderProperties, function(
                                   property
                                 ) {
@@ -367,56 +367,48 @@ var render = function() {
                                     "li",
                                     { key: property.propertyId },
                                     [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "d-block text-truncate"
-                                        },
-                                        [
-                                          _c(
-                                            "strong",
-                                            {
-                                              class: {
-                                                colon: property.type.length > 0
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                _vm._s(property.name) +
-                                                  " (" +
-                                                  _vm._s(
-                                                    _vm.$translate(
-                                                      "Ceres::Template.singleItemIncludeAbbr"
+                                      _c("span", { staticClass: "d-block" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            class: {
+                                              colon: property.type.length > 0
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(property.name) +
+                                                " (" +
+                                                _vm._s(
+                                                  _vm.$translate(
+                                                    "Ceres::Template.singleItemIncludeAbbr"
+                                                  )
+                                                ) +
+                                                " " +
+                                                _vm._s(
+                                                  _vm._f("currency")(
+                                                    _vm._f("propertySurcharge")(
+                                                      _vm.basketItem.variation
+                                                        .data.properties,
+                                                      property.propertyId
                                                     )
-                                                  ) +
-                                                  " " +
-                                                  _vm._s(
-                                                    _vm._f("currency")(
-                                                      _vm._f(
-                                                        "propertySurcharge"
-                                                      )(
-                                                        _vm.basketItem.variation
-                                                          .data.properties,
-                                                        property.propertyId
-                                                      )
-                                                    )
-                                                  ) +
-                                                  ")"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "span",
-                                            [
-                                              _c("order-property-value", {
-                                                attrs: { property: property }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                        ]
-                                      )
+                                                  )
+                                                ) +
+                                                ")"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          [
+                                            _c("order-property-value", {
+                                              attrs: { property: property }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ])
                                     ]
                                   )
                                 }),
