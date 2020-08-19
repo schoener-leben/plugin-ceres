@@ -9098,6 +9098,10 @@ button:focus {
     overflow-x: hidden;
 }
 
+a {
+    overflow-wrap: break-word;
+}
+
 .lozad {
     display: block;
     min-height: 1px;
@@ -9784,7 +9788,7 @@ html.ie {
 
 
 // Components
-.alert {
+.notification-wrapper .alert {
     @include media-breakpoint-up(sm) {
         width: 400px;
     }
@@ -10130,6 +10134,11 @@ html.ie {
 }
 
 .popover {
+    &.hidden {
+        pointer-events: none;
+        visibility: hidden;
+    }
+
     &.popover-md {
         width: $popover-max-width-md;
         max-width: $popover-max-width-md;
@@ -10604,7 +10613,7 @@ textarea.no-resize {
     right: 0;
     bottom: -17px;
     left: 0;
-    z-index: 1000;
+    z-index: $zindex-5;
     display: none;
     width: 94px;
     height: 50px;
@@ -10615,13 +10624,17 @@ textarea.no-resize {
     &:hover {
         opacity: 1;
     }
+
+    @include media-breakpoint-down(sm) {
+        display: none !important; // stylelint-disable-line declaration-no-important
+    }
 }
 
 .back-to-top {
     position: fixed;
     right: 2rem;
     bottom: 2rem;
-    z-index: 100;
+    z-index: $zindex-5;
     display: none;
     width: 40px;
     height: 42px;
@@ -10630,6 +10643,10 @@ textarea.no-resize {
 
     &:hover {
         opacity: 1;
+    }
+
+    @include media-breakpoint-down(sm) {
+        display: none !important; // stylelint-disable-line declaration-no-important
     }
 }
 
@@ -10970,6 +10987,13 @@ textarea.no-resize {
             z-index: auto !important; // stylelint-disable-line declaration-no-important
         }
     }
+}
+
+html.safari .basket-preview-content .totals { // stylelint-disable-line selector-no-qualifying-type
+    display: block !important; // stylelint-disable-line declaration-no-important
+}
+html.ios .basket-preview-content .totals { // stylelint-disable-line selector-no-qualifying-type
+    display: block !important; // stylelint-disable-line declaration-no-important
 }
 
 .cmp-totals {
@@ -12409,18 +12433,17 @@ html.ie .v-s-boxes .v-s-box.invalid { // stylelint-disable-line selector-no-qual
     }
 }
 
-.widget-grid .col-md-3,
-.widget-grid .col-lg-3,
-.widget-grid .col-md-4,
-.widget-grid .widget-grid {
-    .widget-filter-price {
-        .item-filter-price {
-            display: block;
-            text-align: right;
-        }
+@include media-breakpoint-down(md) {
+    .filter-collapse {
+        .widget-filter-price {
+            .item-filter-price {
+                display: block;
+                text-align: right;
+            }
 
-        .input-group {
-            margin-bottom: 1rem;
+            .input-group {
+                margin-bottom: 1rem;
+            }
         }
     }
 }
@@ -12546,6 +12569,14 @@ html.ie .v-s-boxes .v-s-box.invalid { // stylelint-disable-line selector-no-qual
             content: attr(data-translation-empty);
         }
     }
+
+    .collapse-container {
+        .widget-grid {
+            -webkit-column-span: all;
+               -moz-column-span: all;
+                    column-span: all;
+        }
+    }
 }
 
 .widget-provider-select {
@@ -12562,6 +12593,7 @@ html.ie .v-s-boxes .v-s-box.invalid { // stylelint-disable-line selector-no-qual
 .widget-background {
 
     > .container-max {
+        position: relative;
         padding-right: 0;
         padding-left: 0;
     }
@@ -12594,7 +12626,6 @@ html.ie .v-s-boxes .v-s-box.invalid { // stylelint-disable-line selector-no-qual
         right: 0;
         bottom: 0;
         left: 0;
-        z-index: -1;
         height: 100% !important; // stylelint-disable-line declaration-no-important
         background-repeat: no-repeat;
         background-position: center !important; // stylelint-disable-line declaration-no-important
@@ -12632,12 +12663,10 @@ html.ie .v-s-boxes .v-s-box.invalid { // stylelint-disable-line selector-no-qual
 
 .widget-accordion {
     .card {
-        &:first-of-type {
-            border-bottom: $card-border-width solid $card-border-color;
-        }
+        border-bottom: 0;
 
-        &:nth-of-type(2) {
-            border-top: 0;
+        &:last-child {
+            border-bottom: $card-border-width solid $card-border-color;
         }
 
         button {
@@ -14127,6 +14156,10 @@ html.safari { // stylelint-disable-next-line selector-no-qualifying-type
             min-width: inherit;
             max-width: 1170px;
         }
+    }
+
+    .widget-code.is-safe-mode {
+        max-height: 120px;
     }
 }
 
